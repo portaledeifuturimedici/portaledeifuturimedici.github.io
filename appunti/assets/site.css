@@ -1,0 +1,649 @@
+/* Generato da site_build.py — NON modificare a mano.
+   Ogni colore viene da palette.py (FONTE UNICA, accessor su cerbero.py). */
+
+/* ---- tema NIGHT «oil slick» = default ---- */
+:root, :root[data-theme="night"] {
+  --bg:#14102A;--surface:#221B45;--ink:#EDE9FF;--muted:#A99FD0;--line:#362C60;
+  --fisica:#FF6BB0;--fisica-dark:#E7237E;--fisica-light:#59223B;--fisica-a1:#FF8AC0;
+  --chimica:#7C93FF;--chimica-dark:#3756E6;--chimica-light:#232C55;--chimica-a1:#99ABFF;
+  --biologia:#3ED9A0;--biologia-dark:#27A577;--biologia-light:#215140;--biologia-a1:#58E4B0;
+  --sem-errore:#FF6B5C;--sem-corretto:#78E060;--sem-processo:#2BD6C4;--sem-energia:#FF9E3D;
+  --iride: radial-gradient(82% 34% at 14% 20%, rgba(255,107,176,0.34), transparent 55%),radial-gradient(76% 32% at 88% 40%, rgba(124,147,255,0.32), transparent 55%),radial-gradient(80% 36% at 42% 60%, rgba(62,217,160,0.3), transparent 55%),radial-gradient(60% 28% at 82% 82%, rgba(255,107,176,0.14), transparent 58%);
+  --iride-base: linear-gradient(160deg, #150B30, #0A1A33);
+  --navbg: rgba(20,16,42,0.82);
+  --sheen: linear-gradient(115deg, transparent 30%, rgba(153,171,255,0.06) 46%, transparent 60%);
+  --shadow: 0 1px 2px rgba(0,0,0,.30), 0 18px 40px -18px rgba(0,0,0,.65);
+  --card: rgba(255,107,176,0.07);
+}
+:root[data-theme="day"] {
+  --bg:#FBF7F0;--surface:#FFFFFF;--ink:#201B2E;--muted:#6B6480;--line:#E7DFD4;
+  --fisica:#C13E7A;--fisica-dark:#7E2350;--fisica-light:#F6DCE8;--fisica-a1:#E0699B;
+  --chimica:#3A4FA6;--chimica-dark:#20296B;--chimica-light:#DCE1F5;--chimica-a1:#5E7BD9;
+  --biologia:#2E8B6B;--biologia-dark:#1B5742;--biologia-light:#D5EBDF;--biologia-a1:#4FB88C;
+  --sem-errore:#E24B3C;--sem-corretto:#2FA84F;--sem-processo:#0E8C8C;--sem-energia:#E8912A;
+  --iride: radial-gradient(82% 34% at 14% 20%, rgba(193,62,122,0.2), transparent 55%),radial-gradient(76% 32% at 88% 40%, rgba(58,79,166,0.19), transparent 55%),radial-gradient(80% 36% at 42% 60%, rgba(46,139,107,0.18), transparent 55%),radial-gradient(60% 28% at 82% 82%, rgba(193,62,122,0.09), transparent 58%);
+  --iride-base: linear-gradient(160deg, #FBF7F0, #FFFFFF);
+  --navbg: rgba(255,255,255,0.9);
+  --sheen: linear-gradient(115deg, transparent 30%, rgba(94,123,217,0.04) 46%, transparent 60%);
+  --shadow: 0 1px 2px rgba(32,27,46,0.05), 0 14px 34px -16px rgba(32,27,46,0.22);
+  --card: rgba(193,62,122,0.05);
+}
+
+/* ---- preferenze di LETTURA (l'utente le cambia dal pannello) ---- */
+:root{
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+                Georgia, Cambria, "Times New Roman", serif;
+  --font-legge: Verdana, Tahoma, "DejaVu Sans", "Segoe UI", sans-serif;
+  --font-read: var(--font-serif);
+  /* La dimensione e' BASE (responsive, decisa dal CSS) x SCALA (scelta
+     dell'utente). Sono due cose diverse e vanno composte, non sovrapposte:
+     scrivendo un `--fs` assoluto da JS, lo stile inline batteva la media query e
+     sul telefono il testo non rimpiccioliva mai. Con la scala convivono. */
+  --fs-base: 19px;                      /* dimensione base, responsive */
+  --fs-scale: 1;                        /* scala scelta dall'utente    */
+  --fs: calc(var(--fs-base) * var(--fs-scale));
+  --lh: 1.75;          /* interlinea             */
+  --measure: 66ch;     /* lunghezza di riga      */
+  --radius: 16px;      /* card standard          */
+  --r-lg: 20px;        /* superfici grandi (hero, form, box del pacchetto/dona) */
+  --wrap: 1200px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+body{
+  font-family:var(--font-sans);
+  /* Sfondo UNICO e continuo per tutto il sito (2026-07-24): i pool di colore (--iride) TILANO
+     verticalmente (repeat-y, tile 130vh) su una BASE continua (--iride-base, full page). Cosi'
+     il fondo e' vivo e IN MOVIMENTO (scroll) per TUTTA l'altezza, mai spento dopo due schermi,
+     senza tagli ne' giunture (i pool sfumano a trasparente prima del bordo-tile). BASE BLOCCATA. */
+  background-color:var(--bg);
+  background-image:var(--iride),var(--iride-base);
+  background-repeat:repeat-y,no-repeat;
+  background-size:100% 130vh,100% 100%;
+  background-attachment:scroll;
+  background-position:center top,top;
+  color:var(--ink);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  transition:background-color .25s ease,color .25s ease;
+}
+/* NB: niente `overflow-x:hidden` sul body. C'era, come stampella contro lo
+   scroll orizzontale, ma sposta il contenitore di scorrimento: `window.scrollY`
+   resta a 0 e gli eventi di scroll sulla finestra NON scattano piu' (e' cosi'
+   che «riprendi da dove eri» non salvava niente). Le cause vere dell'overflow
+   sono state chiuse una per una — `min-width:0` sui figli del grid, tabelle che
+   scorrono nel proprio contenitore, blocchi recintati che vanno a capo — e il
+   build verifica a ogni giro che a nessuna larghezza si scrolli in orizzontale.
+   Nascondere il sintomo dopo aver curato la causa costa solo effetti collaterali. */
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;height:auto}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(16px,4vw,28px)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* il focus segue la MATERIA della pagina: --accent e' una custom property, quindi
+   eredita dentro la .wrap dell'episodio; fuori ripiega su fisica. */
+:focus-visible{outline:3px solid var(--accent,var(--fisica));outline-offset:2px;border-radius:4px}
+/* selezione del testo e scrollbar a tema: dettagli che fanno sentire il sito curato */
+::selection{background:color-mix(in srgb,var(--fisica) 26%,transparent);color:var(--ink)}
+:root{scrollbar-color:var(--line) transparent}
+.skip{position:absolute;left:-999px;top:8px;z-index:200;background:var(--surface);
+  color:var(--ink);padding:10px 16px;border-radius:10px;border:1px solid var(--line)}
+.skip:focus{left:12px}
+
+/* ---- superficie iridescente ---- */
+/* Le sezioni NON ridisegnano piu' il gradiente: lo sfondo e' unico sul body (sopra).
+   Restano trasparenti e si appoggiano su quel fondo continuo -> nessun taglio allo scroll. */
+.iride{position:relative;background:transparent}
+.iride::after{display:none}   /* lo sheen per-sezione ripeteva il taglio a ogni confine */
+.iride>*{position:relative;z-index:1}
+
+/* ---- navigazione ---- */
+.nav{position:sticky;top:0;z-index:100;background:var(--navbg);
+  backdrop-filter:saturate(160%) blur(14px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:20px;height:62px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:17px}
+.logo .mark{width:30px;height:30px;flex:none}
+.nav-links{display:flex;gap:22px;margin-left:auto;align-items:center}
+.nav-links a{font-size:15px;color:var(--muted);font-weight:500}
+.nav-links a:hover,.nav-links a[aria-current]{color:var(--ink)}
+.nav-tools{display:flex;gap:8px;align-items:center;margin-left:8px}
+.icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;
+  font-size:16px;transition:border-color .15s,background .15s}
+.icon-btn:hover{border-color:var(--muted)}
+.nav-toggle{display:none}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;
+  padding:11px 20px;border-radius:12px;border:1px solid transparent;cursor:pointer;
+  font-family:inherit;transition:transform .12s,box-shadow .2s,background .2s,border-color .2s}
+.btn-primary{background:var(--fisica);color:#14102A;
+  box-shadow:0 10px 26px -12px rgba(255,107,176,0.5)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:var(--card);color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--muted)}
+
+/* ---- hero ---- */
+.hero{padding:clamp(56px,9vw,104px) 0 clamp(48px,7vw,84px);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,56px);align-items:center}
+.eyebrow{display:inline-block;font-size:12.5px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--biologia);margin-bottom:14px}
+h1,h2,h3,h4{line-height:1.18;letter-spacing:-.022em;font-weight:800}
+.hero h1{font-size:clamp(32px,5.6vw,60px);margin-bottom:20px;letter-spacing:-.032em;line-height:1.08}
+/* Il gradiente delle tre materie. Le FERMATE arrivano inline, calcolate sul
+   centro di ogni parola (vedi `elenco_materie_colorate`): qui restano solo il
+   ritaglio sul testo e la ripiegatura per chi non lo supporta. */
+.grad{-webkit-background-clip:text;background-clip:text;color:transparent}
+@supports not ((background-clip:text) or (-webkit-background-clip:text)){
+  .grad{color:var(--ink);background-image:none}
+}
+.lead{font-size:clamp(16.5px,1.7vw,19px);color:var(--muted);max-width:56ch;line-height:1.65}
+.hero .lead{margin-bottom:28px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.hero-meta{display:flex;gap:22px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.hero-meta b{color:var(--ink)}
+.hero-meta span{display:flex;align-items:center;gap:7px}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+
+/* anteprima appunti nel hero */
+.peek{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow);overflow:hidden}
+.peek-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;
+  border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.peek-bar i{width:10px;height:10px;border-radius:50%;display:block;flex:none}
+.peek-body{padding:20px 22px;font-family:var(--font-serif);font-size:15px;line-height:1.7}
+/* non e' un heading: e' il mock-up decorativo di una scheda (aria-hidden) —
+   metterlo nell'outline creava un salto h1->h4 sulla landing */
+.peek-tit{font-family:var(--font-sans);font-size:15px;margin-bottom:10px;
+  font-weight:800;letter-spacing:-.01em;line-height:1.25}
+.peek-body p{color:var(--muted);margin-bottom:12px}
+.peek-body .hl{color:var(--ink);font-weight:600;
+  box-shadow:inset 0 -.5em 0 rgba(62,217,160,0.22);border-radius:2px}
+
+section{padding:clamp(60px,8vw,100px) 0}
+.head{max-width:62ch;margin:0 auto clamp(34px,4.5vw,56px);text-align:center}
+.head h1,.head h2{font-size:clamp(25px,3.6vw,39px);margin-bottom:14px}
+.head .lead{margin:0 auto}
+
+/* ---- statistiche ---- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+  border-block:1px solid var(--line);padding:34px 0}
+.stat{text-align:center}
+.stat .n{font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-.03em;
+  background:linear-gradient(110deg,var(--fisica),var(--biologia));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:13.5px;color:var(--muted);margin-top:2px}
+
+/* ---- schede ---- */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card h3{font-size:19px;margin-bottom:8px}
+.card p{font-size:14.5px;color:var(--muted);line-height:1.6}
+.card.subj::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
+.card.subj .ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;
+  font-size:23px;background:var(--accent-wash);margin-bottom:15px}
+.card.subj .sub{font-size:12px;font-weight:600;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.card.subj ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.card.subj li{font-size:14px;color:var(--ink);display:flex;gap:9px;align-items:flex-start}
+.card.subj li::before{content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--accent);margin-top:8px;flex:none}
+.card.subj .count{margin-top:18px;font-size:13.5px;color:var(--muted);
+  display:flex;align-items:baseline;gap:7px}
+.card.subj .count b{font-size:21px;color:var(--accent);font-weight:800}
+.card.subj .count span{font-style:italic}
+.feat .fi{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  font-size:20px;background:var(--card);border:1px solid var(--line);margin-bottom:14px}
+.feat h3{font-size:16.5px}
+
+/* ---- catalogo ---- */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;
+  margin-bottom:26px}
+.search{flex:1 1 260px;max-width:400px;display:flex;align-items:center;gap:9px;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 14px}
+.search input{flex:1;border:0;background:transparent;color:var(--ink);
+  font:inherit;font-size:15px;padding:11px 0;min-width:0}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{outline:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chip{padding:9px 16px;border-radius:30px;border:1px solid var(--line);background:var(--card);
+  font:inherit;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;
+  transition:all .15s;white-space:nowrap}
+.chip:hover{border-color:var(--muted);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(276px,1fr));gap:14px}
+.ep{display:flex;flex-direction:column;gap:9px;padding:17px 18px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius);position:relative;
+  transition:transform .15s,border-color .2s,box-shadow .2s}
+.ep::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;
+  border-radius:0 3px 3px 0;background:var(--accent)}
+/* SENZA questa riga il filtro non si vede: `display:flex` qui sopra batte il
+   `[hidden]{display:none}` del browser, quindi il JS nascondeva le schede e
+   loro restavano a schermo (il contatore cambiava, la griglia no). */
+.cat-grid .ep[hidden]{display:none}
+.ep.pronto:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow)}
+/* «in arrivo» = attesa, non guasto: resta leggibile, non finge d'essere un link */
+.ep.atteso{opacity:.62;border-style:dashed;cursor:default}
+.ep.atteso::before{opacity:.5}
+.ep .attesa{color:var(--muted);font-style:italic}
+/* versione FULL: stato di lavorazione onesto (ambra = processo, non errore) */
+.fc-open{color:var(--sem-energia);font-weight:600}
+.nav-priv{margin-left:9px;padding:2.5px 8px;border-radius:999px;font-size:11px;
+  font-weight:700;letter-spacing:.06em;color:var(--sem-energia);
+  border:1px solid var(--sem-energia);white-space:nowrap}
+.ep.pronto .foot span:last-child{color:var(--accent);font-weight:600}
+/* il badge di lavorazione vince anche da ultimo span della scheda (specificita') */
+.ep.pronto .foot .fc-open{color:var(--sem-energia)}
+.ep-top{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+.ep-top .id{color:var(--muted);letter-spacing:.02em}
+.ep h2,.ep h3{font-size:15.5px;line-height:1.35;font-weight:700;letter-spacing:-.01em}
+.ep .foot{margin-top:auto;padding-top:4px;display:flex;gap:13px;font-size:12.5px;color:var(--muted)}
+.vuoto{text-align:center;color:var(--muted);padding:40px 0;display:none}
+
+/* ---- pagina APPUNTI ---- */
+.doc{display:grid;grid-template-columns:250px minmax(0,1fr);
+  gap:clamp(24px,4vw,52px);align-items:start;padding:34px 0 72px}
+/* senza questo un figlio di grid tiene `min-width:auto` e sfonda la colonna
+   (l'indice usciva di ~390px sul telefono, trascinando tutta la pagina) */
+.doc>*{min-width:0}
+.toc{position:sticky;top:80px;max-height:calc(100vh - 110px);overflow-y:auto;
+  font-size:13.5px;padding-right:6px}
+/* il livello e' semantica, la taglia e' stile: e' un h2 vestito da etichetta
+   (era un h5 scelto per la dimensione, e creava un salto h1->h5) */
+.toc-title{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);margin-bottom:11px;font-weight:600;list-style:none}
+.toc-title::-webkit-details-marker{display:none}
+.toc-n{display:none}
+.toc-wrap>summary{cursor:default}
+.toc a{display:block;padding:5px 10px;border-left:2px solid var(--line);
+  color:var(--muted);line-height:1.4;transition:color .15s,border-color .15s}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.toc a.lv3{padding-left:20px;font-size:12.5px}
+
+.doc-head{padding:26px 0 4px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.crumb{font-size:13.5px;color:var(--muted);margin-bottom:14px}
+.crumb a:hover{color:var(--ink);text-decoration:underline}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;padding:5px 12px;border-radius:20px;
+  color:var(--accent);background:var(--accent-wash);border:1px solid var(--accent-line)}
+.doc-head h1{font-size:clamp(26px,4vw,42px);margin:15px 0 12px;letter-spacing:-.025em}
+.doc-meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px;color:var(--muted);
+  padding-bottom:22px}
+
+/* la COLONNA DI LETTURA */
+.read{font-family:var(--font-read);font-size:var(--fs);line-height:var(--lh);
+  max-width:var(--measure)}
+.read h2,.read h3,.read h4{font-family:var(--font-sans);letter-spacing:-.018em;
+  line-height:1.25;scroll-margin-top:80px}
+.read h2{font-size:1.42em;margin:2.1em 0 .6em;padding-bottom:.28em;border-bottom:1px solid var(--line)}
+.read h3{font-size:1.14em;margin:1.7em 0 .5em}
+.read h4{font-size:1em;margin:1.4em 0 .4em;color:var(--muted)}
+.read h2:first-child,.read h3:first-child{margin-top:.4em}
+.read p{margin:0 0 1.05em}
+.read ul,.read ol{margin:0 0 1.15em 1.35em;padding:0}
+.read li{margin-bottom:.5em;padding-left:.15em}
+.read li::marker{color:var(--accent)}
+.read ul ul,.read ol ol,.read ul ol,.read ol ul{margin:.5em 0 .2em 1.25em}
+.read strong{font-weight:700;color:var(--ink)}
+.read em{font-style:italic}
+.read code{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  font-size:.88em;background:var(--card);border:1px solid var(--line);
+  border-radius:5px;padding:.12em .38em}
+/* I blocchi recintati dei materiali contengono PROSA (flashcards, schemi), non
+   codice: senza `pre-wrap` una frase lunga diventa 2300px da scorrere a mano
+   sul telefono. Si manda a capo, mantenendo l'andare a capo voluto. */
+.read pre{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;margin:0 0 1.15em;
+  white-space:pre-wrap;overflow-wrap:break-word}
+.read pre code{background:none;border:0;padding:0;font-size:.86em;line-height:1.6;
+  white-space:inherit}
+.read blockquote{margin:0 0 1.15em;padding:.1em 0 .1em 1.15em;
+  border-left:3px solid var(--accent);color:var(--muted)}
+.read blockquote p:last-child{margin-bottom:0}
+.read hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.read a:not(.anchor){color:var(--accent);text-decoration:underline;
+  text-underline-offset:2px;text-decoration-thickness:1px}
+.read .anchor{opacity:0;margin-left:.4em;color:var(--muted);
+  text-decoration:none;font-weight:400;transition:opacity .15s}
+.read h2:hover .anchor,.read h3:hover .anchor,.anchor:focus{opacity:1}
+/* L'ancora «#» e' un comodo da mouse. Al tocco resta invisibile ma cliccabile:
+   ~100 bersagli minuscoli per pagina. Su dispositivi senza hover si toglie. */
+@media (hover: none){.read .anchor{display:none}}
+.read li.task{list-style:none;display:flex;gap:.6em;align-items:flex-start;margin-left:-1.35em}
+.read li.task .box{flex:none;width:1.05em;height:1.05em;margin-top:.32em;border-radius:4px;
+  border:1.5px solid var(--muted);display:grid;place-items:center;font-size:.7em;line-height:1}
+.read li.task.done .box{background:var(--sem-corretto);border-color:var(--sem-corretto);
+  color:#14102A}
+.read li.task.done .task-body{color:var(--muted)}
+
+/* tabelle: scrollano DENTRO, la pagina non scrolla mai in orizzontale */
+.table-wrap{overflow-x:auto;margin:0 0 1.3em;border:1px solid var(--line);
+  border-radius:12px;background:var(--surface);
+  -webkit-overflow-scrolling:touch}
+.read table{border-collapse:collapse;width:100%;font-family:var(--font-sans);
+  font-size:.87em;line-height:1.5;min-width:min(100%,420px)}
+.read th,.read td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.read thead th{background:var(--card);font-weight:700;font-size:.94em;
+  position:sticky;top:0;white-space:nowrap}
+.read tbody tr:last-child td{border-bottom:0}
+.read tbody tr:hover{background:var(--card)}
+
+/* blocchi materiale */
+.parte{margin-top:44px}
+.parte-h{display:flex;align-items:center;gap:12px;margin-bottom:6px;
+  font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent)}
+.parte-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.parte-t{font-size:clamp(18px,2.4vw,23px);margin-bottom:6px;letter-spacing:-.02em}
+.mat{margin:30px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);overflow:hidden}
+/* materiale unico: nessuna intestazione da aprire, e' il corpo della pagina */
+.mat.singolo{border:0;background:none;margin:8px 0 0}
+.mat.singolo>.mat-body{padding:0}
+
+/* risposte a scomparsa (retrieval practice): invitano a rispondere PRIMA */
+.read details.quiz{border:1px solid var(--line);border-radius:12px;
+  background:var(--card);margin:0 0 .8em;overflow:hidden}
+.read details.quiz>summary{cursor:pointer;list-style:none;padding:13px 16px;
+  font-family:var(--font-sans);font-size:.92em;font-weight:600;
+  display:flex;gap:10px;align-items:flex-start}
+.read details.quiz>summary::-webkit-details-marker{display:none}
+.read details.quiz>summary::before{content:"?";flex:none;width:20px;height:20px;
+  border-radius:50%;background:var(--accent);color:var(--bg);font-size:12px;
+  display:grid;place-items:center;font-weight:800;margin-top:1px}
+.read details.quiz[open]>summary{border-bottom:1px solid var(--line)}
+.read details.quiz[open]>summary::before{content:"¹3"}
+.read .quiz-body{padding:14px 16px 4px}
+.read .quiz-body>*:last-child{margin-bottom:.6em}
+
+/* figura + licenza: la didascalia resta ATTACCATA all'immagine (obbligo CC) */
+.read figure.fig{margin:0 0 1.4em;border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;background:var(--surface)}
+.read figure.fig img{display:block;width:100%;height:auto;background:#fff}
+.read figure.fig figcaption{padding:11px 15px;font-family:var(--font-sans);
+  font-size:.76em;line-height:1.55;color:var(--muted);border-top:1px solid var(--line)}
+.read figure.fig figcaption a{color:var(--accent)}
+.mat>summary,.mat>.mat-h{display:flex;align-items:center;gap:11px;padding:14px 20px;
+  background:var(--card);border-bottom:1px solid var(--line);
+  font-family:var(--font-sans);font-weight:700;font-size:14.5px;letter-spacing:-.01em}
+.mat>summary{cursor:pointer;list-style:none}
+.mat>summary::-webkit-details-marker{display:none}
+.mat>summary::after{content:"\203a";margin-left:auto;color:var(--muted);
+  font-size:20px;transform:rotate(90deg);transition:transform .2s}
+.mat[open]>summary::after{transform:rotate(-90deg)}
+.mat .ico{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+  background:var(--accent-wash);color:var(--accent);font-size:13px;flex:none}
+.mat-body{padding:6px 20px 20px}
+/* Il contenitore prende tutta la larghezza, ma la PROSA resta sulla misura di
+   lettura: solo tabelle e blocchi di codice possono debordare (li' la larghezza
+   aiuta). Senza questa distinzione la riga arriva a ~84 caratteri e affatica. */
+.mat-body>.read{max-width:none}
+.mat-body>.read>*{max-width:var(--measure)}
+.mat-body>.read>.table-wrap,.mat-body>.read>pre{max-width:none}
+
+/* barra di avanzamento lettura: le pagine sono lunghe ~25 schermate, questa
+   dice a colpo d'occhio quanto manca. E' essa stessa il gradiente delle tre
+   materie. La aggiunge il JS solo sulle pagine appunti. */
+.read-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:101;
+  pointer-events:none;background:transparent}
+.read-progress>span{display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--fisica),var(--chimica),var(--biologia));
+  transition:width .08s linear}
+
+/* «riprendi da dove eri»: si offre, non si impone */
+.riprendi{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:118;
+  display:flex;align-items:center;gap:12px;max-width:calc(100vw - 24px);
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:10px 12px 10px 16px;box-shadow:var(--shadow);font-size:13.5px}
+.riprendi b{color:var(--accent);font-weight:600}
+.riprendi span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.riprendi .btn{padding:8px 14px;font-size:13.5px;flex:none}
+.riprendi .chiudi{background:none;border:0;color:var(--muted);font-size:20px;
+  cursor:pointer;line-height:1;padding:6px;flex:none;min-width:32px;min-height:32px}
+@media(max-width:720px){
+  .riprendi{left:10px;right:10px;transform:none;max-width:none;bottom:10px}
+}
+
+/* pannello preferenze di lettura */
+.prefs{position:fixed;right:16px;bottom:16px;z-index:120;width:min(310px,calc(100vw - 32px));
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  box-shadow:var(--shadow);padding:16px 18px;display:none}
+.prefs[open],.prefs.show{display:block}
+.prefs-h{font-size:12px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--muted);margin-bottom:12px;font-weight:600}
+.pref-row{margin-bottom:14px}
+.pref-row:last-child{margin-bottom:0}
+.pref-row label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.seg{display:flex;gap:5px}
+.seg button{flex:1;padding:8px 4px;border-radius:9px;border:1px solid var(--line);
+  background:var(--card);color:var(--muted);font:inherit;font-size:13px;cursor:pointer;
+  transition:all .15s;min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--fisica);color:#14102A;
+  border-color:var(--fisica);font-weight:600}
+.prefs .close{position:absolute;top:10px;right:12px;background:none;border:0;
+  color:var(--muted);font-size:19px;cursor:pointer;line-height:1;padding:4px}
+
+/* ---- form contatti ---- */
+.form-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:clamp(26px,4vw,44px);box-shadow:var(--shadow);max-width:620px;margin:0 auto}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}
+.field .hint{font-weight:400;color:var(--muted)}
+.field textarea{resize:vertical;min-height:92px;line-height:1.55;font-family:inherit}
+.conta{text-align:right;font-size:12px;color:var(--muted);margin-top:4px}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;font:inherit;
+  font-size:15.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line);
+  border-radius:11px;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--fisica)}
+.field input[aria-invalid="true"]{border-color:var(--sem-errore)}
+.field .err{display:none;font-size:12.5px;color:var(--sem-errore);margin-top:5px}
+.field input[aria-invalid="true"]~.err{display:block}
+.consent{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;
+  color:var(--muted);line-height:1.55;margin-bottom:18px}
+.consent input{width:18px;height:18px;flex:none;margin-top:2px;accent-color:var(--fisica)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-msg{margin-top:14px;padding:13px 16px;border-radius:11px;font-size:14px;display:none}
+.form-msg.show{display:block}
+.form-msg.ok{background:rgba(120,224,96,0.1);color:var(--sem-corretto);
+  border:1px solid var(--sem-corretto)}
+.form-msg.no{background:rgba(255,107,92,0.1);color:var(--sem-errore);border:1px solid var(--sem-errore)}
+
+/* ---- pacchetto-studio (la VETRINA: quantita', mai contenuto) ---- */
+.pack{display:grid;grid-template-columns:1.35fr .65fr;gap:clamp(20px,3vw,38px);
+  align-items:start}
+.pack-lista{display:flex;flex-direction:column;gap:2px}
+.pack-riga{padding:15px 0;border-bottom:1px solid var(--line)}
+.pack-riga:last-child{border-bottom:0}
+.pack-t{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:5px}
+.pack-t b{font-size:16px;letter-spacing:-.01em}
+.pack-q{font-size:13px;font-weight:600;color:var(--chimica);
+  background:rgba(124,147,255,0.14);padding:2px 9px;border-radius:20px}
+.pack-riga p{font-size:14px;color:var(--muted);line-height:1.55;max-width:56ch}
+.pack-box{background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow);
+  position:sticky;top:80px}
+.pack-box-h{font-size:12px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--muted);margin-bottom:14px}
+.prezzo{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:18px}
+.prezzo .cifra{font-size:40px;font-weight:800;letter-spacing:-.03em;
+  background:linear-gradient(110deg,var(--chimica),var(--fisica));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.prezzo-nota{font-size:13px;color:var(--muted)}
+.prezzo-tbd{font-size:14.5px;color:var(--muted);line-height:1.55;margin-bottom:18px;
+  padding-bottom:16px;border-bottom:1px solid var(--line)}
+.pack-check{list-style:none;display:flex;flex-direction:column;gap:9px;
+  margin-bottom:20px}
+.pack-check li{font-size:14px;display:flex;gap:9px;align-items:flex-start}
+.pack-check li::before{content:"\2713";color:var(--biologia);font-weight:800;flex:none}
+.pack-box .btn{width:100%;justify-content:center}
+.pack-nota{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:14px}
+
+/* in fondo agli appunti: cosa ha in piu' questo episodio (solo conteggi) */
+.sblocco{margin-top:34px;padding:22px 24px;border:1px dashed var(--line);
+  border-radius:var(--radius);background:var(--card)}
+.sblocco-h{display:flex;align-items:center;gap:9px;font-family:var(--font-sans);
+  font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);margin-bottom:13px}
+.sblocco-l{list-style:none;display:flex;gap:22px;flex-wrap:wrap;margin-bottom:16px}
+.sblocco-l li{font-size:14px;color:var(--ink)}
+.sblocco-l li.senza-n{color:var(--muted)}
+.sblocco-l b{color:var(--chimica);font-size:19px;font-weight:800;margin-right:4px}
+
+/* navigazione fra episodi: due card col titolo di dove porti */
+.doc-cta{display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}
+.ep-nav{display:flex;flex-direction:column;gap:5px;padding:14px 16px;
+  border:1px solid var(--line);border-radius:12px;background:var(--surface);
+  transition:border-color .18s,transform .15s,box-shadow .2s;min-width:0}
+.ep-nav:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
+.ep-nav.next{text-align:right}
+.ep-nav-lbl{font-size:12px;font-weight:600;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent)}
+.ep-nav-t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.35;
+  overflow:hidden;text-overflow:ellipsis;display:-webkit-box;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical}
+@media(max-width:520px){.doc-cta{grid-template-columns:1fr}.ep-nav.next{text-align:left}}
+
+/* ---- sostieni il progetto (al posto della pubblicita') ---- */
+.dona{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,4vw,40px);
+  align-items:center;max-width:900px;margin:0 auto}
+.dona-premi{background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow)}
+.dona-premi h3{font-size:14px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--biologia);margin-bottom:14px}
+.dona-premi ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.dona-premi li{font-size:15px;color:var(--ink);display:flex;gap:11px;
+  align-items:flex-start;line-height:1.5}
+.dona-premi li::before{content:"\2605";color:var(--biologia);flex:none;
+  margin-top:1px;font-size:14px}
+.dona-cta{text-align:center}
+.dona-cta .btn{font-size:16px;padding:14px 28px}
+.dona-nota{font-size:13px;color:var(--muted);margin-top:14px;line-height:1.5;
+  max-width:34ch;margin-inline:auto}
+
+/* richiamo discreto nella colonna dell'indice */
+.dona-rail{margin-top:24px;padding:16px 18px;border:1px dashed var(--line);
+  border-radius:var(--radius);background:var(--card);text-align:center}
+.dona-rail-t{font-size:13.5px;color:var(--muted);margin-bottom:10px}
+.dona-rail .btn{width:100%;justify-content:center;font-size:14px}
+
+@media(max-width:720px){
+  .dona{grid-template-columns:1fr;gap:22px}
+  .dona-rail{display:none}
+}
+
+/* ---- spazi pubblicitari (discreti, dimensionati, mai nel testo) ---- */
+.ad{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;background:var(--card);border:1px dashed var(--line);border-radius:12px;
+  color:var(--muted);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  overflow:hidden}
+.ad-lab{font-size:10px;opacity:.75}
+.ad-band{margin:0 auto;max-width:970px;min-height:106px}
+.ad-rail{margin-top:26px;min-height:262px;position:sticky;top:80px}
+.ad-foot{margin:38px auto 0;max-width:730px;min-height:106px}
+@media(max-width:900px){.ad-band,.ad-foot{min-height:104px;max-width:340px}}
+
+/* ---- footer ---- */
+footer{border-top:1px solid var(--line);padding:44px 0 32px;
+  color:var(--muted);font-size:14px}
+.foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:28px}
+.foot-grid p{font-size:13.5px;line-height:1.6;margin-top:10px;max-width:34ch}
+.foot-grid .foot-h{font-size:12px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--ink);margin-bottom:12px}
+.foot-grid a{display:block;margin-bottom:8px;font-size:13.5px}
+.foot-grid a:hover{color:var(--ink)}
+.copy{margin-top:34px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12.5px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:1080px){
+  .doc{grid-template-columns:1fr}
+  .toc{position:static;max-height:none;order:-1;border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 18px;background:var(--surface)}
+  .toc-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:2px}
+  .toc a{border-left:0;padding:6px 8px;border-radius:7px}
+  .toc a.on{background:var(--accent-wash)}
+  .ad-rail{display:none}
+  /* CHIUSO di default fuori dal desktop: aperto occupava 563 px su 667 di
+     schermo (l'84 per cento), cioe' un muro di 16 voci prima di leggere.
+     Resta a un tocco, e il conteggio dice cosa c'e' dentro senza aprirlo. */
+  .toc-wrap:not([open])>.toc-title{margin-bottom:0}
+  .toc-title{display:flex;align-items:center;gap:10px;cursor:pointer;
+    margin-bottom:0;padding:4px 0;min-height:28px}
+  .toc-wrap[open]>.toc-title{margin-bottom:11px}
+  .toc-title::after{content:"\203a";margin-left:auto;font-size:19px;
+    transform:rotate(90deg);transition:transform .2s;line-height:1}
+  .toc-wrap[open]>.toc-title::after{transform:rotate(-90deg)}
+  .toc-n{display:inline;text-transform:none;letter-spacing:0;font-weight:400;
+    opacity:.8}
+}
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:34px}
+  .grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr);gap:26px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  /* il riquadro prezzo va SOTTO l'elenco, non in una colonna da 120px */
+  .pack{grid-template-columns:1fr}
+  .pack-box{position:static}
+  .sblocco-l{gap:14px}
+}
+/* Il menu si raccoglie a 920px, non a 720: il nome del brand e' lungo
+   («Portale dei Futuri Medici») e sotto ~920 la barra non regge nome + voci
+   in linea (il nome andava a capo). Cosi' il logo ha tutta la riga. */
+@media(max-width:920px){
+  .nav-links{position:fixed;inset:62px 0 auto 0;flex-direction:column;gap:0;
+    background:var(--surface);border-bottom:1px solid var(--line);padding:8px 0;
+    display:none;box-shadow:var(--shadow);z-index:99}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px clamp(16px,4vw,28px);font-size:16px;width:100%}
+  .nav-toggle{display:grid}
+}
+@media(max-width:720px){
+  :root{--fs-base:17.5px}
+  .grid-3,.grid-4{grid-template-columns:1fr}
+  .cat-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr;gap:22px}
+  .peek-body{padding:16px 18px}
+  .mat-body{padding:4px 14px 16px}
+  .read h2{font-size:1.32em}
+  .prefs{right:10px;left:10px;bottom:10px;width:auto}
+  .copy{flex-direction:column;gap:8px}
+}
+@media(max-width:420px){
+  .toolbar{flex-direction:column;align-items:stretch}
+  /* In COLONNA il flex-basis non e' piu' la larghezza ma l'ALTEZZA: senza
+     azzerarlo, `flex:1 1 260px` gonfiava la scatola della ricerca a 260px
+     attorno a un campo alto 46 (misurato sul live a 375px). Qui la ricerca
+     deve occupare solo cio' che serve. */
+  .search{max-width:none;flex:0 0 auto}
+}
+
+/* ---- STAMPA: gli appunti si stampano ---- */
+@media print{
+  :root{--fs:11pt;--lh:1.5;--measure:none}
+  .nav,.toc,.prefs,.ad,.doc-cta,footer,.anchor,.nav-tools,
+  .read-progress,.riprendi,#prefs-btn{display:none !important}
+  body{background:#fff;color:#000}
+  /* le risposte a scomparsa vanno stampate APERTE: una domanda senza risposta,
+     su carta, e' inutile. Il summary resta la domanda, il body la risposta. */
+  .read details.quiz>.quiz-body{display:block !important}
+  .read details.quiz{border:1pt solid #6B6480;break-inside:avoid}
+  .doc{display:block;padding:0}
+  .read{max-width:none;font-size:11pt}
+  .mat{border:0;break-inside:auto}
+  .mat>summary,.mat>.mat-h{background:none;border-bottom:1pt solid #6B6480;padding:6pt 0}
+  .mat-body{padding:0}
+  .read h2,.read h3{break-after:avoid}
+  .table-wrap,.read pre,.read blockquote{break-inside:avoid}
+  a{color:#000}
+}
