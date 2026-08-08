@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="night">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<title>Privacy | Portale dei Futuri Medici</title>
+<meta name="description" content="Cosa raccoglie il sito, dove finisce e cosa resta sul tuo dispositivo.">
+<meta property="og:title" content="Privacy | Portale dei Futuri Medici">
+<meta property="og:description" content="Cosa raccoglie il sito, dove finisce e cosa resta sul tuo dispositivo.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Portale dei Futuri Medici">
+<meta property="og:locale" content="it_IT">
+<meta property="og:url" content="https://portaledeifuturimedici.com/appunti/privacy.html">
+<meta property="og:image" content="https://portaledeifuturimedici.com/appunti/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Portale dei Futuri Medici">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Privacy | Portale dei Futuri Medici">
+<meta name="twitter:description" content="Cosa raccoglie il sito, dove finisce e cosa resta sul tuo dispositivo.">
+<meta name="twitter:image" content="https://portaledeifuturimedici.com/appunti/og.png">
+<meta name="theme-color" content="#14102A">
+<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>
+<link rel="canonical" href="https://portaledeifuturimedici.com/appunti/privacy.html">
+<link rel="icon" href="brand/favicon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Appunti">
+<link rel="stylesheet" href="assets/site.css">
+<script>(function(){try{var p=JSON.parse(localStorage.getItem('appunti-prefs')||'{}');
+if(p.theme)document.documentElement.setAttribute('data-theme',p.theme);}catch(e){}})();</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Salta al contenuto</a>
+<header class="nav"><div class="wrap nav-in">
+<a class="logo" href="index.html">
+<img class="mark" src="brand/favicon.svg" alt="" width="30" height="30">
+<span>Portale dei Futuri Medici</span></a>
+<nav class="nav-links" id="nav-links" aria-label="Principale"><a href="appunti/">Appunti</a><a href="#materie">Materie</a><a href="#metodo">Metodo</a><a href="#pacchetto">Pacchetto</a><a href="#sostieni">Sostieni</a><a href="#contatti">Contatti</a></nav>
+<div class="nav-tools">
+<button class="icon-btn" id="theme-btn" aria-label="Cambia tema">&#9681;</button>
+<button class="icon-btn nav-toggle" id="nav-toggle" aria-label="Apri il menu"
+ aria-expanded="false" aria-controls="nav-links">&#9776;</button>
+</div></div></header>
+<main id="main">
+<section class="acc-wrap"><div class="wrap legal" style="max-width:44rem">
+<h1>Come trattiamo i tuoi dati</h1>
+<p class="lead">Gli appunti si leggono senza account, senza login e senza
+cookie. Questa pagina elenca per intero ciò che esce dal tuo browser mentre
+leggi, e ciò che invece resta solo sul tuo dispositivo.</p>
+<h2>Il conteggio delle visite</h2>
+<p>Quando apri una pagina, il browser manda un messaggio a
+<span class="dato">https://counter.portaledeifuturimedici.com/hit</span>: un contatore che gira su Cloudflare
+Workers, sul nostro account, e che esiste per sapere quante volte le pagine
+vengono aperte e quali argomenti servono di più. Non è un servizio
+pubblicitario e non è condiviso con nessuno.</p>
+<ul>
+<li><b>Cosa parte.</b> Due campi soli. <span class="dato">p</span> = il percorso
+della pagina che stai aprendo, per esempio
+<span class="dato">/appunti/s1c11.html</span>: senza indirizzo completo, senza
+parametri di ricerca e senza il punto della pagina in cui ti trovi.
+<span class="dato">e</span> = un'etichetta, <b>vuota</b> per le visite normali e
+valorizzata solo se clicchi uno degli elementi contati: <span class="dato">donate</span> (i bottoni per sostenere il progetto), <span class="dato">installa</span> (il bottone che installa il sito come app), <span class="dato">salva-offline</span> (il bottone che salva gli appunti sul dispositivo), <span class="dato">studypack</span> (il bottone del pacchetto-studio).</li>
+<li><b>Cosa non parte.</b> Nessun identificatore, nessun numero di sessione,
+nessun cookie, nessun nome o indirizzo email, nessun testo di ciò che leggi.
+Non c'è niente che leghi fra loro due visite: il percorso identifica una
+<i>pagina</i>, non una persona.</li>
+<li><b>Cosa resta conservato.</b> Solo numeri: quanti in totale, quanti per
+giorno, quanti per pagina, quanti per etichetta. Il contatore non registra
+l'indirizzo IP e non registra il tipo di browser.</li>
+<li><b>Per quanto tempo.</b> Quei numeri non hanno una scadenza automatica:
+restano finché non vengono azzerati a mano.</li>
+<li><b>Il limite, detto per intero.</b> Come per qualunque richiesta su
+internet, l'indirizzo IP arriva comunque a chi serve la richiesta (qui
+Cloudflare): è il modo in cui i dati vengono consegnati. Il nostro contatore
+non lo legge e non lo salva, ma non possiamo scrivere che non transiti.</li>
+<li><b>Come fermarlo.</b> Un'estensione che blocca le richieste verso il dominio
+del contatore lo spegne, e la lettura degli appunti resta identica.</li>
+</ul>
+
+<h2>Quello che resta sul tuo dispositivo</h2>
+<p>Il sito non usa <b>cookie</b>, di nessun tipo. Salva però due cose nella
+memoria locale del tuo browser: restano lì, non vengono allegate alle richieste
+e non ci arrivano mai.</p>
+<ul>
+<li><span class="dato">appunti-prefs</span> &mdash; le tue preferenze di lettura:
+tema, carattere, dimensione del testo, interlinea, larghezza della colonna.</li>
+<li><span class="dato">appunti-letto:&lt;pagina&gt;</span> &mdash; l'ultima
+sezione che hai raggiunto in ogni pagina di appunti e quando ci sei arrivato,
+per poterti proporre di riprendere da lì.
+Vengono salvati il nome della sezione e il momento dell'ultimo passaggio
+(giorno e ora): non quanto ci sei rimasto, non quante volte ci sei tornato, non
+che cosa hai letto.</li>
+</ul>
+<p>Le cancelli svuotando i dati del sito dal browser: la lettura continua a
+funzionare, riparte solo dalle impostazioni predefinite.</p>
+
+<h2>Se ci scrivi dal modulo</h2>
+<p>Il modulo «resta aggiornato» non parte da solo: parte se lo compili e premi
+invio. In quel caso escono i campi che hai riempito &mdash; nome ed email
+(obbligatori), più cellulare, materia e suggerimenti se li compili &mdash; e
+vanno a <span class="dato">formspree.io</span>, il servizio che raccoglie i messaggi
+e ce li inoltra. Servono ad avvisarti quando escono appunti nuovi e a leggere
+cosa ci chiedi: non finiscono altrove e non vengono ceduti.</p>
+<p><b>Per quanto tempo restano sui suoi server: non è dichiarato.</b>
+L'<a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener nofollow">informativa di
+formspree.io</a> dice soltanto che conserva le informazioni «per il tempo necessario
+alle finalità indicate in questa policy, finché il tuo account è attivo, o per
+quanto serve a fornire i Servizi». Nessun periodo, nessuna distinzione fra piano
+gratuito e a pagamento, nessuna cancellazione automatica che tu possa impostare
+&mdash; e l'account di cui parla quella frase è il nostro, non uno tuo: tu lì non
+ne hai. Scriviamo «non dichiarato» perché è ciò che risulta leggendo: un numero
+tondo suonerebbe più rassicurante e ce lo saremmo inventato noi.</p>
+<p>In pratica, se vuoi che quello che ci hai mandato sparisca: scrivi a
+<a href="mailto:info@portaledeifuturimedici.com"><span class="dato">info@portaledeifuturimedici.com</span></a> e lo facciamo
+rimuovere &mdash; è la strada che resta, visto che il fornitore non te ne offre
+una tua.</p>
+
+<h2>Immagini e link verso altri siti</h2>
+<p>Alcune illustrazioni degli appunti sono ospitate da <b>Wikimedia Commons</b>
+(<span class="dato">upload.wikimedia.org</span>): quando la pagina le carica, il
+tuo browser contatta quel server, che vede la richiesta come la vedrebbe
+qualunque sito da cui scarichi un'immagine. I bottoni che portano fuori (WhatsApp e Ko-fi) sono link normali: da lì in avanti valgono le informative di quei servizi, non questa. Il sito è ospitato da
+<b>GitHub Pages</b> e il contatore gira sulla rete <b>Cloudflare</b>: entrambe
+sono infrastrutture distribuite a livello mondiale.</p>
+
+<h2>Se apri un account</h2>
+<p>Conserviamo: il tuo <b>indirizzo email</b>, una <b>password cifrata</b> (in una
+forma da cui non si risale alla password) e il <b>punto a cui sei arrivato</b> in
+ogni episodio. Nient'altro: niente nome, niente telefono, niente cronologia di
+navigazione. L'email serve a farti entrare e a reimpostare la password; il
+progresso a ritrovare il segno su un altro dispositivo.</p>
+<p>Restano finché tieni l'account. Quando lo elimini, email, progresso e
+sessioni vengono <b>cancellati</b>, non archiviati. Dalla pagina
+<a href="/appunti/account/profilo.html">Il mio account</a> puoi scaricare quello che
+abbiamo su di te e cancellare tutto senza chiedere permesso.</p>
+
+<h2>Su quale base trattiamo questi dati</h2>
+<ul>
+<li><b>Il conteggio delle visite</b> si fonda sul
+<b>legittimo interesse</b> (art. 6(1)(f) GDPR): capire quali argomenti vengono
+aperti di più è ciò che ci dice cosa scrivere dopo, e per saperlo bastano dei
+totali. Quello che parte è il percorso di una pagina: nessun identificatore,
+nessun cookie, niente che leghi fra loro due visite. Siccome non scrive e non
+legge nulla sul tuo dispositivo, non è il tipo di trattamento per cui ti viene
+chiesto il consenso ai cookie &mdash; il che non vuol dire che sia esente da
+tutto: gli altri obblighi restano, ed è per questo che è descritto qui sopra
+per intero e che trovi scritto come fermarlo.</li>
+<li><b>Il modulo «resta aggiornato»</b> si fonda sul
+<b>consenso</b> (art. 6(1)(a) GDPR): quei dati escono solo perché sei tu a
+compilarlo e a inviarlo, per essere avvisato quando escono appunti nuovi. Puoi
+<b>revocare il consenso quando vuoi</b>, scrivendo al recapito qui sotto: da lì
+in poi non ti scriviamo più e facciamo rimuovere quello che ci avevi mandato. La
+revoca vale per il futuro e non rende illecito l'invio che avevi già fatto.</li>
+</ul>
+
+<h2>Dove finiscono i dati, fuori dall'Unione europea</h2>
+<p><b>Quello che scrivi nel modulo esce dall'Unione
+europea.</b> Formspree dichiara di usare infrastruttura tecnica negli
+<b>Stati Uniti</b> per erogare il servizio, e di dover trasferire i dati
+personali negli Stati Uniti e in altre giurisdizioni quando serve a fornirlo.
+Nella sua <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener nofollow">informativa</a>
+<b>non è indicato su quale meccanismo di trasferimento si fondi</b>: non sono
+nominate né clausole contrattuali standard né il Data Privacy Framework. Lo
+scriviamo così com'è, senza addolcirlo, perché questo è l'unico flusso di tutta
+la pagina che porta fuori dati con cui si risale a te &mdash; il tuo nome e la
+tua email. Se la cosa non ti convince, la conseguenza pratica è semplice: non
+usare il modulo e scrivici direttamente a
+<a href="mailto:info@portaledeifuturimedici.com"><span class="dato">info@portaledeifuturimedici.com</span></a>.</p>
+<p>Anche il contatore gira sulla rete <b>Cloudflare</b>,
+che è distribuita a livello mondiale: nemmeno lì possiamo prometterti un «solo
+Unione europea» che non reggerebbe. La differenza sta in cosa viaggia: al
+contatore arriva il percorso di una pagina, non qualcosa che ti identifichi.</p>
+
+<h2>Chi tratta i dati, e come scriverci</h2>
+<p>Il titolare del trattamento è <b>Fabrizio Maria Bucci</b>, persona fisica che gestisce il sito a titolo personale. Per tutto ciò che
+riguarda i tuoi dati puoi scrivere a
+<a href="mailto:info@portaledeifuturimedici.com"><span class="dato">info@portaledeifuturimedici.com</span></a>: da lì puoi
+chiedere quali dati ti riguardano, farli correggere o cancellare, opporti al
+trattamento e revocare il consenso che avevi dato inviando il modulo.</p>
+<p>Sui conteggi delle visite, però, non esiste modo di isolare «i tuoi»: non essendoci nulla che ti identifichi, non c'è nemmeno una riga da estrarre o da cancellare &mdash; e questo vale anche per noi.</p>
+<p class="acc-piede">Ultimo aggiornamento: 08/08/2026.</p>
+</div></section>
+</main>
+<footer><div class="wrap">
+<div class="foot-grid">
+<div><div class="logo"><img class="mark" src="brand/favicon.svg" alt="" width="30" height="30">
+<span>Portale dei Futuri Medici</span></div>
+<p>Appunti gratuiti di Biologia, Chimica e Fisica: il nocciolo di ogni lezione, le mnemotecniche col loro perché, la trappola d'esame e approfondimenti verificati alla fonte. Allineati al Syllabus Ufficiale DM 418 MUR.</p></div>
+<div><div class="foot-h">Appunti</div>
+<a href="appunti/">Tutti gli episodi</a>
+<a href="appunti/?m=biologia">Biologia</a>
+<a href="appunti/?m=chimica">Chimica</a>
+<a href="appunti/?m=fisica">Fisica</a></div>
+<div><div class="foot-h">Il corso</div>
+<a href="index.html#metodo">Come nascono</a>
+<a href="index.html#materie">Le materie</a>
+<a href="index.html#contatti">Resta aggiornato</a></div>
+<div><div class="foot-h">Info</div>
+<a href="index.html#contatti">Contatti</a>
+<a href="privacy.html">Privacy e dati</a></div>
+</div>
+<div class="copy"><span>&copy; 2026 Portale dei Futuri Medici &middot; Progetto didattico</span>
+<span>Contenuti allineati al Syllabus Ufficiale DM 418 &mdash; MUR</span></div>
+</div></footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/account.js" defer></script>
+</body>
+</html>

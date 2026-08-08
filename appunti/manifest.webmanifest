@@ -1,0 +1,87 @@
+{
+  "id": "portale-appunti",
+  "name": "Portale dei Futuri Medici — Appunti",
+  "short_name": "Appunti",
+  "description": "Appunti gratuiti di Biologia, Chimica e Fisica: il nocciolo di ogni lezione, le mnemotecniche col loro perché, la trappola d'esame e approfondimenti verificati alla fonte. Allineati al Syllabus Ufficiale DM 418 MUR.",
+  "lang": "it",
+  "dir": "ltr",
+  "start_url": "./?fonte=app",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "orientation": "any",
+  "background_color": "#14102A",
+  "theme_color": "#14102A",
+  "categories": [
+    "education",
+    "books"
+  ],
+  "icons": [
+    {
+      "src": "./brand/icona-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./brand/icona-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./brand/icona-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./brand/icona-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Appunti di Fisica",
+      "short_name": "Fisica",
+      "url": "./appunti/?m=fisica",
+      "icons": [
+        {
+          "src": "./brand/icona-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Appunti di Chimica",
+      "short_name": "Chimica",
+      "url": "./appunti/?m=chimica",
+      "icons": [
+        {
+          "src": "./brand/icona-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Appunti di Biologia",
+      "short_name": "Biologia",
+      "url": "./appunti/?m=biologia",
+      "icons": [
+        {
+          "src": "./brand/icona-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
