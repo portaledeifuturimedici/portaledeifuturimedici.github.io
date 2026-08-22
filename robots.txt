@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portaledeifuturimedici.com/sitemap.xml
+
+Disallow: /studio/
