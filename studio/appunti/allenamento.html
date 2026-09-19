@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self' https://formspree.io">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Portale dei Futuri Medici — accesso</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:#14102A;color:#EDE9FF;font-family:-apple-system,'Segoe UI',Roboto,sans-serif}
+.card{width:min(92vw,380px);padding:34px 30px;border-radius:18px;background:#221B45;
+  border:1px solid #362C60;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+h1{font-size:17px;margin:0 0 6px;letter-spacing:-.01em}
+p{font-size:13.5px;color:#A99FD0;margin:0 0 18px;line-height:1.5}
+input{width:100%;box-sizing:border-box;padding:11px 13px;border-radius:10px;
+  border:1px solid #362C60;background:#14102A;color:#EDE9FF;font-size:15px}
+input:focus{outline:2px solid #7C93FF;outline-offset:1px;border-color:#7C93FF}
+button{width:100%;margin-top:12px;padding:11px;border:0;border-radius:10px;
+  background:#7C93FF;color:#14102A;font-size:14.5px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+.err{display:none;margin-top:11px;font-size:13px;color:#FF6B5C}
+.err.show{display:block}
+.acc{margin:0 0 18px}
+.acc a{display:block;text-align:center;padding:11px;border-radius:10px;font-size:14.5px;
+  font-weight:700;text-decoration:none;margin-top:10px}
+.acc .primo{background:#7C93FF;color:#14102A}
+.acc .secondo{border:1px solid #362C60;color:#EDE9FF}
+.oppure{font-size:12px;text-align:center;margin:4px 0 12px;color:#A99FD0}
+.nascosto{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Portale dei Futuri Medici — area riservata</h1>
+<p id="stato">Controllo il tuo accesso…</p>
+<div class="acc nascosto" id="acc">
+<a class="primo" id="entra" href="/appunti/account/entra.html">Entra col tuo account</a>
+<a class="secondo" href="/#pacchetto">Vedi come abbonarti</a>
+</div>
+<div class="nascosto" id="modulo">
+<div class="oppure">oppure, se hai la password del pacchetto</div>
+<form id="f"><input id="pw" type="password" autocomplete="current-password"
+ placeholder="Password">
+<button id="go" type="submit">Apri</button>
+<div class="err" id="err">Password sbagliata. Riprova.</div></form>
+</div>
+</div>
+<script>
+(function () {
+  var SALT = 'y7cPeibOU9kS178el6xSzQ==', IV = 'pR+TGKdF3fawaaGU', DATA = '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', ITER = 600000;
+  function b2a(b64) {
+    var s = atob(b64), a = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i);
+    return a;
+  }
+  function apri(html) {
+    /* NON document.write: misurato sul live 2026-07-21, il documento NON veniva
+       sostituito — la pagina decifrata finiva APPESA dentro il cancello (la
+       .card della password restava nel DOM, le <meta> del contenuto cadevano
+       nel body, il titolo restava «— accesso») e soprattutto sopravviveva lo
+       <style> del cancello con `body{display:flex;align-items:center}`: il
+       <main> si stringeva a 357px su 1265 e la griglia .doc calcolava
+       `250px 0px` -> contenuto illeggibile, su desktop E su mobile.
+       Qui si sostituisce l'INTERO <html>, così testa e stili del cancello se
+       ne vanno con lui. */
+    var nuovo = new DOMParser().parseFromString(html, 'text/html');
+    document.replaceChild(document.importNode(nuovo.documentElement, true),
+                          document.documentElement);
+    /* gli script adottati da un altro documento NON si eseguono: vanno
+       ricreati, o il sito resta senza tema/indice/ricerca (site.js). */
+    var vecchi = document.querySelectorAll('script');
+    for (var i = 0; i < vecchi.length; i++) {
+      var s = vecchi[i], n = document.createElement('script');
+      for (var j = 0; j < s.attributes.length; j++) {
+        n.setAttribute(s.attributes[j].name, s.attributes[j].value);
+      }
+      /* Uno script con src INSERITO da codice e' `async` per difetto: eseguono
+         in ordine di ARRIVO, non di documento — e `defer` scritto nel tag non
+         conta piu'. Finche' i motori di studio erano indipendenti nessuno se
+         ne accorgeva; da quando hanno bisogno che studio_fetch.js sia gia'
+         partito, l'ordine e' sostanza. `async=false` e' il modo standard per
+         riavere l'ordine del documento.
+         NB: qui dentro NON si scrivono le parole-spia di verifica() (sono le
+         parole che esistono solo nel chiaro): finirebbero nella pagina-cancello
+         e la farebbero passare per non cifrata. */
+      n.async = false;
+      n.text = s.text;
+      s.parentNode.replaceChild(n, s);
+    }
+  }
+  function decifra(rawKey) {
+    return crypto.subtle.importKey('raw', rawKey, 'AES-GCM', false, ['decrypt'])
+      .then(function (k) {
+        return crypto.subtle.decrypt({name: 'AES-GCM', iv: b2a(IV)}, k, b2a(DATA));
+      })
+      .then(function (buf) { apri(new TextDecoder().decode(buf)); });
+  }
+  /* Dalla password alla pagina aperta. UNA funzione per le due strade (il
+     modulo e l'account), cosi' non possono divergere: se un giorno cambia la
+     derivazione, cambia per tutte e due. */
+  function apriCon(pw) {
+    return crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2',
+                                   false, ['deriveBits'])
+      .then(function (k) {
+        return crypto.subtle.deriveBits(
+          {name: 'PBKDF2', hash: 'SHA-256', salt: b2a(SALT), iterations: ITER},
+          k, 256);
+      })
+      .then(function (bits) {
+        var raw = new Uint8Array(bits);
+        /* La chiave si registra PRIMA di aprire la pagina, non dopo: da quando
+           i DATI dei motori sono cifrati, gli script della pagina decifrata la
+           cercano in sessione appena partono, e «dopo» era una gara che si
+           vinceva solo per come sono ordinati microtask e task. Se poi la
+           password si rivela sbagliata la si toglie subito (vedi il .catch):
+           una chiave sbagliata in sessione farebbe fallire il caricamento dei
+           materiali anche sulle pagine successive. */
+        var b = '';
+        for (var i = 0; i < raw.length; i++) b += String.fromCharCode(raw[i]);
+        try { sessionStorage.setItem('studio-key',
+              JSON.stringify({salt: SALT, k: btoa(b)})); } catch (e) {}
+        return decifra(raw);
+      })
+      .catch(function (e) {
+        try { sessionStorage.removeItem('studio-key'); } catch (e2) {}
+        throw e;
+      });
+  }
+  function mostra(id) { document.getElementById(id).className =
+    document.getElementById(id).className.replace(' nascosto', '').replace('nascosto', ''); }
+  function dici(t) { document.getElementById('stato').textContent = t; }
+  function soloPassword(testo) {
+    dici(testo); mostra('acc'); mostra('modulo');
+  }
+
+  document.getElementById('f').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var btn = document.getElementById('go'), err = document.getElementById('err');
+    btn.disabled = true; err.className = 'err';
+    apriCon(document.getElementById('pw').value).catch(function () {
+      err.className = 'err show'; btn.disabled = false;
+    });
+  });
+
+  /* Chi torna da una sessione gia' sbloccata non deve rifare niente. */
+  try {
+    var cache = JSON.parse(sessionStorage.getItem('studio-key') || 'null');
+    if (cache && cache.salt === SALT) {
+      decifra(b2a(cache.k)).catch(function () {});
+      return;
+    }
+  } catch (e) {}
+
+  /* L'ACCOUNT PRIMA DELLA PASSWORD (2026-09-18). Il fatto: «sono iscritto,
+     clicco sulle dispense e mi reinvia al paywall». Nessuna pagina chiedeva
+     chi sei. Adesso il cancello lo chiede, e ha QUATTRO esiti, non due:
+       - abbonato       -> la pagina si apre da sola, senza password;
+       - iscritto senza pacchetto -> al pagamento, come ha chiesto l'utente;
+       - diritto PARZIALE (una materia) -> glielo si DICE, non lo si manda a
+         pagare di nuovo: e' quello che fa sembrare rotto un sito a chi ha
+         gia' pagato qualcosa;
+       - non entrato    -> «Entra col tuo account», e la password resta come
+         seconda strada per chi l'ha ricevuta prima di questo giorno.
+     Se la rete non risponde, si ripiega sulla password: il cancello non deve
+     mai lasciare fuori un abbonato perche' un servizio in piu' e' giu'. */
+  var API = 'https://account.portaledeifuturimedici.com';
+  var tok = '';
+  try { tok = localStorage.getItem('appunti-tok') || ''; } catch (e) {}
+  var entra = document.getElementById('entra');
+  entra.href = entra.href + (entra.href.indexOf('?') < 0 ? '?' : '&') +
+               'torna=' + encodeURIComponent(location.pathname + location.search);
+  if (!API) { soloPassword('Pagina riservata. Inserisci la password per aprire il contenuto.'); return; }
+  if (!tok) {
+    soloPassword('Pagina riservata agli abbonati. Entra col tuo account e si apre da sola.');
+    return;
+  }
+  fetch(API + '/studio/chiave', {headers: {'Authorization': 'Bearer ' + tok}})
+    .then(function (r) {
+      if (r.status === 401) return {sloggato: true};
+      return r.json().then(function (d) { d._stato = r.status; return d; });
+    })
+    .then(function (d) {
+      if (d.consentito && d.password) {
+        dici('Abbonamento attivo: apro la pagina…');
+        return apriCon(d.password).catch(function () {
+          soloPassword('Non riesco ad aprire la pagina con il tuo account. Riprova, o usa la password.');
+        });
+      }
+      if (d.sloggato) {
+        soloPassword('Sessione scaduta: entra di nuovo e la pagina si apre da sola.');
+        return;
+      }
+      /* Si manda al pagamento SOLO davanti a un «no» ESPLICITO (200 con
+         consentito:false). Qualunque altra risposta — il 404 di un Worker
+         vecchio che la rotta non la conosce, un 503, un 500 — e' un «non lo
+         so», e un «non lo so» non deve mai far pagare chi ha gia' pagato:
+         si ripiega sulla password. Senza questa riga, pubblicare il cancello
+         prima di ricaricare il Worker avrebbe mandato al pagamento proprio gli
+         abbonati di oggi, quelli con la password e con un account. */
+      if (d._stato !== 200) {
+        soloPassword('Non riesco a verificare il tuo abbonamento adesso. Se hai la password, usala qui sotto.');
+        return;
+      }
+      if (d.parziale) {
+        dici('Il tuo abbonamento non comprende tutto il pacchetto: questa pagina ne fa parte. Scrivici se pensi sia un errore.');
+        mostra('acc');
+        return;
+      }
+      dici('Il tuo account non ha ancora il pacchetto: ti porto alla pagina per abbonarti…');
+      setTimeout(function () { location.href = '/#pacchetto'; }, 1400);
+    })
+    .catch(function () {
+      soloPassword('Non riesco a verificare il tuo account adesso. Se hai la password, usala qui sotto.');
+    });
+})();
+</script>
+</body>
+</html>
