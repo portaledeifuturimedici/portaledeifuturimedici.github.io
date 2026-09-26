@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self' https://formspree.io">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Portale dei Futuri Medici — accesso</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:#14102A;color:#EDE9FF;font-family:-apple-system,'Segoe UI',Roboto,sans-serif}
+.card{width:min(92vw,380px);padding:34px 30px;border-radius:18px;background:#221B45;
+  border:1px solid #362C60;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+h1{font-size:17px;margin:0 0 6px;letter-spacing:-.01em}
+p{font-size:13.5px;color:#A99FD0;margin:0 0 18px;line-height:1.5}
+button{width:100%;margin-top:12px;padding:11px;border:0;border-radius:10px;
+  background:#7C93FF;color:#14102A;font-size:14.5px;font-weight:700;cursor:pointer}
+.acc{margin:0 0 4px}
+.acc a{display:block;text-align:center;padding:11px;border-radius:10px;font-size:14.5px;
+  font-weight:700;text-decoration:none;margin-top:10px}
+.acc .primo{background:#7C93FF;color:#14102A}
+.acc .secondo{border:1px solid #362C60;color:#EDE9FF}
+/* !important NON e' pigrizia: `.acc a{display:block}` (sopra) e' piu' SPECIFICO di
+   `.nascosto`, quindi senza questa forzatura i bottoni «nascosti» si vedevano lo
+   stesso — misurato nel browser il 2026-09-19: chi era gia' entrato leggeva «Entra
+   col tuo account», e «Vai al tuo profilo» compariva a tutti. I test a DOM non
+   potevano accorgersene: guardano le classi, non il CSS calcolato. */
+.nascosto{display:none !important}
+.nota{font-size:13px;line-height:1.5;opacity:.75;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Portale dei Futuri Medici — area riservata</h1>
+<p id="stato" role="status" aria-live="polite">Controllo il tuo accesso…</p>
+<div class="acc nascosto" id="acc">
+<a class="primo" id="entra" href="/appunti/account/entra.html">Entra col tuo account</a>
+<a class="secondo nascosto" id="profilo" href="/appunti/account/profilo.html">Vai al tuo profilo</a>
+<a class="secondo" id="abbonati" href="/#pacchetto">Vedi come abbonarti</a>
+<a class="secondo nascosto" id="aiuto" href="https://wa.me/393791004415?text=Ciao%20Luca%2C%20ho%20gi%C3%A0%20l%27accesso%20al%20pacchetto%20ma%20l%27area%20riservata%20non%20mi%20si%20apre" rel="noopener" target="_blank">Ho gia&#39; l&#39;accesso: scrivici</a>
+</div>
+<p class="nota nascosto" id="nota">Fino a poco fa qui si entrava con una password
+uguale per tutti. Adesso si entra con il <b>tuo account</b>: cosi&#39; l&#39;accesso si
+pu&ograve; dare e togliere a te, e cambia a ogni pubblicazione.</p>
+<button class="nascosto" id="riprova" type="button">Riprova</button>
+</div>
+<script>
+(function () {
+  var SALT = '+dXN+65acYmAWY7bSc6HPQ==', IV = 'akj6/V3pVb2v2ee1', DATA = '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';
+  var API = 'https://account.portaledeifuturimedici.com';
+  var VOCE_TOKEN = 'appunti-tok', VOCE_CHIAVE = 'studio-key';
+  function b2a(b64) {
+    var s = atob(b64), a = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i);
+    return a;
+  }
+  function apri(html) {
+    /* NON document.write: misurato sul live 2026-07-21, il documento NON veniva
+       sostituito — la pagina decifrata finiva APPESA dentro il cancello (la
+       .card restava nel DOM, le <meta> del contenuto cadevano nel body, il
+       titolo restava «— accesso») e soprattutto sopravviveva lo <style> del
+       cancello con `body{display:flex;align-items:center}`: il <main> si
+       stringeva a 357px su 1265 e la griglia .doc calcolava `250px 0px` ->
+       contenuto illeggibile, su desktop E su mobile.
+       Qui si sostituisce l'INTERO <html>, così testa e stili del cancello se
+       ne vanno con lui. */
+    var nuovo = new DOMParser().parseFromString(html, 'text/html');
+    document.replaceChild(document.importNode(nuovo.documentElement, true),
+                          document.documentElement);
+    /* gli script adottati da un altro documento NON si eseguono: vanno
+       ricreati, o il sito resta senza tema/indice/ricerca (site.js). */
+    var vecchi = document.querySelectorAll('script');
+    for (var i = 0; i < vecchi.length; i++) {
+      var s = vecchi[i], n = document.createElement('script');
+      for (var j = 0; j < s.attributes.length; j++) {
+        n.setAttribute(s.attributes[j].name, s.attributes[j].value);
+      }
+      /* Uno script con src INSERITO da codice e' `async` per difetto: eseguono
+         in ordine di ARRIVO, non di documento — e `defer` scritto nel tag non
+         conta piu'. Da quando i motori hanno bisogno che studio_fetch.js sia
+         gia' partito, l'ordine e' sostanza. `async=false` e' il modo standard
+         per riavere l'ordine del documento.
+         NB: qui dentro NON si scrivono le parole-spia di verifica() (sono le
+         parole che esistono solo nel chiaro): finirebbero nella pagina-cancello
+         e la farebbero passare per non cifrata. */
+      n.async = false;
+      n.text = s.text;
+      s.parentNode.replaceChild(n, s);
+    }
+  }
+  function decifra(rawKey) {
+    return crypto.subtle.importKey('raw', rawKey, 'AES-GCM', false, ['decrypt'])
+      .then(function (k) {
+        return crypto.subtle.decrypt({name: 'AES-GCM', iv: b2a(IV)}, k, b2a(DATA));
+      })
+      .then(function (buf) { apri(new TextDecoder().decode(buf)); });
+  }
+  function el(id) { return document.getElementById(id); }
+  function mostra(id) { el(id).classList.remove('nascosto'); }
+  function nascondi(id) { el(id).classList.add('nascosto'); }
+  function dici(t) { el('stato').textContent = t; }
+  function dimentica() { try { sessionStorage.removeItem(VOCE_CHIAVE); } catch (e) {} }
+  /* La chiave si registra PRIMA di aprire la pagina: gli script della pagina
+     decifrata la cercano in sessione appena partono (studio_fetch.js), e
+     «dopo» sarebbe una gara. Se poi non apre, la si toglie subito. */
+  function apriCon(k64) {
+    try { sessionStorage.setItem(VOCE_CHIAVE, JSON.stringify({salt: SALT, k: k64})); } catch (e) {}
+    return decifra(b2a(k64)).catch(function (e) { dimentica(); throw e; });
+  }
+  /* fuori: nessuna chiave. conEntra=false quando si e' gia' entrati;
+     conProfilo quando la strada e' il profilo (conferma dell'email), e allora
+     «abbonati» sparisce: a chi ha gia' pagato non si mostra un pagamento. */
+  function fuori(testo, conEntra, conProfilo) {
+    dici(testo);
+    if (conEntra === false) nascondi('entra'); else mostra('entra');
+    if (conProfilo) { mostra('profilo'); nascondi('abbonati'); }
+    mostra('acc');
+    mostra('nota');
+  }
+  function riprova(testo) { dici(testo); mostra('riprova'); }
+
+  var entra = el('entra');
+  entra.href = entra.href + (entra.href.indexOf('?') < 0 ? '?' : '&') +
+               'torna=' + encodeURIComponent(location.pathname + location.search);
+  el('riprova').addEventListener('click', function () { location.reload(); });
+
+  function chiediAllAccount() {
+    if (!API) { riprova('Area riservata momentaneamente non disponibile.'); return; }
+    var tok = '';
+    try { tok = localStorage.getItem(VOCE_TOKEN) || ''; } catch (e) {}
+    if (!tok) {
+      fuori('Pagina riservata agli abbonati: entra col tuo account e si apre da sola.');
+      return;
+    }
+    var ctrl = (typeof AbortController === 'function') ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 12000);
+    fetch(API + '/studio/chiave?sale=' + encodeURIComponent(SALT),
+          {headers: {'Authorization': 'Bearer ' + tok},
+           signal: ctrl ? ctrl.signal : undefined})
+      .then(function (r) {
+        clearTimeout(timer);
+        if (r.status === 401) return {sloggato: true};
+        return r.json().then(function (d) { d._stato = r.status; return d; });
+      })
+      .then(function (d) {
+        if (d.sloggato) {
+          /* il token e' MORTO: si toglie, o entra.html lo crederebbe vivo */
+          try { localStorage.removeItem(VOCE_TOKEN); } catch (e) {}
+          fuori('La sessione è scaduta: entra di nuovo e la pagina si apre da sola.');
+          return;
+        }
+        /* Un «si'» SENZA chiave e' un «non lo so», mai un «no»: e' cio' che
+           risponde un Worker di prima del 2026-09-19 (password al posto della
+           chiave), e mandare al pagamento proprio gli abbonati sarebbe il guasto
+           peggiore (finding X3/Z1 della review). */
+        if (d._stato === 200 && d.consentito && !d.chiave) {
+          riprova('Non riesco a verificare il tuo accesso adesso. Riprova tra poco.');
+          return;
+        }
+        if (d._stato === 200 && d.consentito && d.chiave) {
+          dici('Abbonamento attivo: apro la pagina…');
+          /* chiave_precedente: c'e' solo nei minuti di una rotazione della
+             chiave madre, quando online puo' esserci ancora la build di prima */
+          return apriCon(d.chiave).catch(function (e) {
+            if (d.chiave_precedente) return apriCon(d.chiave_precedente);
+            throw e;
+          }).catch(function () {
+            riprova('Questa pagina appartiene a una pubblicazione appena sostituita: ricaricala.');
+          });
+        }
+        /* Si decide SOLO davanti a un «no» ESPLICITO (200). Qualunque altra
+           risposta — un Worker vecchio che non conosce la rotta, un 503, un
+           500 — e' un «non lo so», e un «non lo so» non deve mai mandare a
+           pagare chi ha gia' pagato. */
+        if (d._stato !== 200) {
+          riprova('Non riesco a verificare il tuo accesso adesso. Riprova tra poco.');
+          return;
+        }
+        if (d.in_attesa) {
+          fuori('Abbiamo ricevuto il tuo pagamento: si attiva appena confermi il tuo ' +
+                'indirizzo email. Controlla la posta, anche lo spam, o rimanda il link ' +
+                'dal tuo profilo.', false, true);
+          return;
+        }
+        /* email non confermata: se un accesso e' gia' legato a quell'indirizzo, e'
+           la conferma che manca — lo si dice e non lo si manda a pagare da solo.
+           La frase NON parla di «pagato o donato» ne' di un accesso che «si attiva
+           da solo» (audit 2026-09-24, finding PAG-4): oggi il webhook di Ko-fi e'
+           spento (i premi dei sostenitori li attiva lo staff) e Stripe non e'
+           acceso (`site_build.PAGAMENTI_PROVIDER` vuoto), quindi chi aveva appena
+           pagato o donato leggeva una promessa che nessuno manteneva. Detta cosi'
+           e' vera con qualunque provider acceso o spento. */
+        if (d.email_da_confermare) {
+          fuori('Il tuo account non ha ancora il pacchetto. Se ti abbiamo già dato ' +
+                "l’accesso con questa email, si attiva appena la confermi: dal " +
+                'tuo profilo rimandi il link.', false, true);
+          mostra('abbonati');
+          return;
+        }
+        /* «Scrivici» senza un posto dove scrivere e' una porta dipinta sul muro
+           (audit 2026-09-24, finding PAG-5): il ramo chiamava fuori(..., false)
+           e basta, e il bottone d'aiuto restava nascosto. Lo si mostra come nel
+           ramo senza diritti. */
+        if (d.parziale) {
+          fuori('Il tuo abbonamento non comprende tutto il pacchetto, e questa pagina ' +
+                'ne fa parte. Scrivici se pensi sia un errore.', false);
+          mostra('aiuto');
+          return;
+        }
+        fuori('Il tuo account non ha ancora il pacchetto.', false);
+        mostra('aiuto');
+      })
+      .catch(function () {
+        clearTimeout(timer);
+        riprova('Non riesco a verificare il tuo accesso adesso. Riprova tra poco.');
+      });
+  }
+
+  /* La chiave di QUESTA build gia' in sessione: si apre senza chiedere niente.
+     Se non apre (build sostituita, voce guasta) la si butta e si chiede
+     all'account — mai una pagina muta. */
+  var cache = null, entrato = false;
+  try { cache = JSON.parse(sessionStorage.getItem(VOCE_CHIAVE) || 'null'); } catch (e) {}
+  try { entrato = !!localStorage.getItem(VOCE_TOKEN); } catch (e) {}
+  /* la chiave in sessione vale solo finche' c'e' un account entrato: chi esce
+     da un'altra scheda non deve lasciare /studio aperta in questa (finding Z9) */
+  if (cache && !entrato) dimentica();
+  if (cache && entrato && cache.salt === SALT && cache.k) {
+    var k = null;
+    try { k = b2a(cache.k); } catch (e) {}
+    if (k) {
+      decifra(k).catch(function () { dimentica(); chiediAllAccount(); });
+    } else {
+      dimentica(); chiediAllAccount();
+    }
+  } else {
+    chiediAllAccount();
+  }
+})();
+</script>
+</body>
+</html>
