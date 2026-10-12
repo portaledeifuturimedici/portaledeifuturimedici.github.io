@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Portale dei Futuri Medici//Webinar//IT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:evento-20261012t190000z@portaledeifuturimedici.com
+DTSTAMP:20261012T190000Z
+DTSTART:20261012T190000Z
+DTEND:20261012T203000Z
+SUMMARY:Medicina in modalità facile · Webinar Zoom
+DESCRIPTION:Webinar gratuito su Zoom con il Dr. Fabrizio Bucci\, Matteo Pia
+ zzo e Luca Pelliccia. Il link Zoom ti arriva per email prima della diretta
+ . Porta un quaderno e una penna.\nhttps://portaledeifuturimedici.com/event
+ o/
+LOCATION:Zoom
+URL:https://portaledeifuturimedici.com/evento/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Tra 30 minuti: Medicina in modalità facile
+END:VALARM
+END:VEVENT
+END:VCALENDAR
