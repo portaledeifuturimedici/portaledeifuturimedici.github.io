@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /studio/
+Disallow: /appunti/brand/USO.md
+Allow: /
+
+Sitemap: https://portaledeifuturimedici.com/sitemap.xml
