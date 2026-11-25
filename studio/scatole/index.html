@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Portale dei Futuri Medici — accesso</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:#14102A;color:#EDE9FF;font-family:-apple-system,'Segoe UI',Roboto,sans-serif}
+.card{width:min(92vw,380px);padding:34px 30px;border-radius:18px;background:#221B45;
+  border:1px solid #362C60;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+h1{font-size:17px;margin:0 0 6px;letter-spacing:-.01em}
+p{font-size:13.5px;color:#A99FD0;margin:0 0 18px;line-height:1.5}
+button{width:100%;margin-top:12px;padding:11px;border:0;border-radius:10px;
+  background:#7C93FF;color:#14102A;font-size:14.5px;font-weight:700;cursor:pointer}
+.acc{margin:0 0 4px}
+.acc a{display:block;text-align:center;padding:11px;border-radius:10px;font-size:14.5px;
+  font-weight:700;text-decoration:none;margin-top:10px}
+.acc .primo{background:#7C93FF;color:#14102A}
+.acc .secondo{border:1px solid #362C60;color:#EDE9FF}
+/* !important NON e' pigrizia: `.acc a{display:block}` (sopra) e' piu' SPECIFICO di
+   `.nascosto`, quindi senza questa forzatura i bottoni «nascosti» si vedevano lo
+   stesso — misurato nel browser il 2026-09-19: chi era gia' entrato leggeva «Entra
+   col tuo account», e «Vai al tuo profilo» compariva a tutti. I test a DOM non
+   potevano accorgersene: guardano le classi, non il CSS calcolato. */
+.nascosto{display:none !important}
+.casa{color:inherit;text-decoration:none}
+.legali{margin:18px 0 0;font-size:12.5px;text-align:center}
+.legali a{color:inherit;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="card">
+<h1><a class="casa" href="/">Portale dei Futuri Medici</a> — Studypack completo</h1>
+<p id="stato" role="status" aria-live="polite">Controllo il tuo accesso…</p>
+<div class="acc nascosto" id="acc">
+<a class="primo" id="entra" href="/appunti/account/entra.html">Entra col tuo account</a>
+<a class="secondo nascosto" id="profilo" href="/appunti/account/profilo.html">Vai al tuo profilo</a>
+<a class="secondo" id="abbonati" href="/pacchetto/">Vedi cosa c&#39;&egrave; dentro e i prezzi</a>
+<a class="secondo nascosto" id="aiuto" href="https://wa.me/393341006740?text=Ciao%2C%20ho%20gi%C3%A0%20lo%20Studypack%20completo%20ma%20non%20riesco%20ad%20aprirlo." rel="noopener" target="_blank">Ho gi&agrave; l&#39;accesso: scrivici</a>
+</div>
+<div class="acc nascosto" id="fuori">
+<a class="primo" href="/appunti/">Vai agli appunti gratuiti</a>
+<a class="secondo" href="/">Torna alla home</a>
+</div>
+<button class="nascosto" id="riprova" type="button">Riprova</button>
+<p class="legali"><a href="/appunti/privacy.html">Privacy e dati</a> &middot; <a href="/appunti/condizioni.html">Condizioni di vendita</a> &middot; <a href="/appunti/recesso.html">Recedere dal contratto qui</a></p>
+</div>
+<script>
+(function () {
+  var SALT = 'h/BqA6uQovTdhKyhjFU77g==', IV = 'w+N6PmKaPNcn15mj', DATA = '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';
+  var API = 'https://account.portaledeifuturimedici.com';
+  var VOCE_TOKEN = 'appunti-tok', VOCE_CHIAVE = 'studio-key';
+  function b2a(b64) {
+    var s = atob(b64), a = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i);
+    return a;
+  }
+  function apri(html) {
+    /* NON document.write: misurato sul live 2026-07-21, il documento NON veniva
+       sostituito — la pagina decifrata finiva APPESA dentro il cancello (la
+       .card restava nel DOM, le <meta> del contenuto cadevano nel body, il
+       titolo restava «— accesso») e soprattutto sopravviveva lo <style> del
+       cancello con `body{display:flex;align-items:center}`: il <main> si
+       stringeva a 357px su 1265 e la griglia .doc calcolava `250px 0px` ->
+       contenuto illeggibile, su desktop E su mobile.
+       Qui si sostituisce l'INTERO <html>, così testa e stili del cancello se
+       ne vanno con lui. */
+    var nuovo = new DOMParser().parseFromString(html, 'text/html');
+    document.replaceChild(document.importNode(nuovo.documentElement, true),
+                          document.documentElement);
+    /* gli script adottati da un altro documento NON si eseguono: vanno
+       ricreati, o il sito resta senza tema/indice/ricerca (site.js). */
+    var vecchi = document.querySelectorAll('script');
+    for (var i = 0; i < vecchi.length; i++) {
+      var s = vecchi[i], n = document.createElement('script');
+      for (var j = 0; j < s.attributes.length; j++) {
+        n.setAttribute(s.attributes[j].name, s.attributes[j].value);
+      }
+      /* Uno script con src INSERITO da codice e' `async` per difetto: eseguono
+         in ordine di ARRIVO, non di documento — e `defer` scritto nel tag non
+         conta piu'. Da quando i motori hanno bisogno che studio_fetch.js sia
+         gia' partito, l'ordine e' sostanza. `async=false` e' il modo standard
+         per riavere l'ordine del documento.
+         NB: qui dentro NON si scrivono le parole-spia di verifica() (sono le
+         parole che esistono solo nel chiaro): finirebbero nella pagina-cancello
+         e la farebbero passare per non cifrata. */
+      n.async = false;
+      n.text = s.text;
+      s.parentNode.replaceChild(n, s);
+    }
+    /* L'ANCORA ATTRAVERSO IL CANCELLO (2026-09-29). Il browser salta al frammento
+       dell'indirizzo quando carica il CANCELLO, dove quell'id non c'e'; dopo la
+       sostituzione nessuno ci torna. Un link a un blocco di una lezione
+       (/studio/appunti/<lezione>.html#trappole-errori-a) apriva la pagina in cima,
+       col blocco chiuso. Qui: il salto e' immediato (lo scorrimento morbido del
+       sito, su migliaia di pixel, non arriva mai prima che la pagina cambi forma)
+       e la finestra `tieni()` lo rifa' finche' la pagina prende forma (foglio di
+       stile, immagini, misura), se non ti muovi; al cambio d'ancora vale lo
+       scorrimento del sito, con la stessa finestra. Il codice e' ANCORA_JS. */
+    tieni();
+    vaiAllAncora(true);
+    window.addEventListener('hashchange', function () { tieni(); vaiAllAncora(false); });
+  }
+  var mosso = false, tieniFino = 0, agganciata = false;
+  function ferma() { mosso = true; }
+  window.addEventListener('wheel', ferma, {passive: true});
+  window.addEventListener('touchstart', ferma, {passive: true});
+  window.addEventListener('keydown', ferma);
+  window.addEventListener('mousedown', ferma);
+  function vaiAllAncora(subito) {
+    var h = String(location.hash || '').slice(1);
+    if (!h) return;
+    try { h = decodeURIComponent(h); } catch (e) {}
+    var t = document.getElementById(h);
+    if (!t) return;
+    for (var n = t; n; n = n.parentElement) {
+      if (n.tagName === 'DETAILS') n.open = true;
+    }
+    if (t.scrollIntoView) {
+      try { t.scrollIntoView(subito ? {block: 'start', behavior: 'instant'} : {block: 'start'}); }
+      catch (e) { t.scrollIntoView(true); }
+    }
+    if (!/^(A|BUTTON|INPUT|SELECT|TEXTAREA|SUMMARY)$/.test(t.tagName) &&
+        !t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+    try { t.focus({preventScroll: true}); } catch (e) {}
+  }
+  function correggi() {
+    if (!mosso && Date.now() < tieniFino) vaiAllAncora(true);
+  }
+  function tieni() {
+    mosso = false;
+    tieniFino = Date.now() + 10000;
+    if (agganciata) return;
+    agganciata = true;
+    var i, fogli = document.querySelectorAll('link[rel="stylesheet"]');
+    for (i = 0; i < fogli.length; i++) fogli[i].addEventListener('load', correggi);
+    var imm = document.images || [];
+    for (i = 0; i < imm.length; i++) {
+      if (imm[i].complete) continue;
+      imm[i].addEventListener('load', correggi);
+      imm[i].addEventListener('error', correggi);
+    }
+    if (typeof ResizeObserver === 'function') {
+      new ResizeObserver(correggi).observe(document.documentElement);
+    }
+  }
+  /* IL CLIC SULL'ANCORA GIA' NELL'INDIRIZZO (08/10). Un link verso il frammento che
+     l'indirizzo ha gia' non lo cambia: niente hashchange, e il blocco richiuso nel
+     frattempo restava chiuso (la riga delle mappe in testa alla lezione, la fascia
+     delle tappe, «Avanti»). Il clic normale su quel link riapre e riporta in vista,
+     con la stessa finestra di tieni(); gli altri li governa hashchange. */
+  window.addEventListener('click', function (ev) {
+    if (!ev || ev.defaultPrevented || ev.button || ev.metaKey || ev.ctrlKey ||
+        ev.shiftKey || ev.altKey) return;
+    var a = ev.target && ev.target.closest ? ev.target.closest('a[href^="#"]') : null;
+    if (!a || !location.hash || a.getAttribute('href') !== location.hash) return;
+    tieni();
+    vaiAllAncora(false);
+  });
+  var ChiaveDispositivo = (function () {
+    var DB_CHIAVI = 'portale-studio-chiavi', ARCHIVIO = 'chiavi', COPIA = 'portale-studio-';
+    var GIORNI = 30, GIORNO_MS = 86400000, TOLLERANZA_MS = 3600000;
+    var ATTESA_MS = 4000, GLOBALE = 'studioChiaveDispositivo', VOCE_TOK = 'appunti-tok';
+    /* la sessione e' ancora quella? Si rilegge SUBITO PRIMA di ogni scrittura: un'uscita da
+       un'altra scheda, mentre un «si'» era in volo, cancella il database, e una scrittura
+       dopo lo ricreerebbe (revisione di sicurezza del 09/10, rilievo 2) */
+    function ancora(tok) {
+      try { return !!tok && localStorage.getItem(VOCE_TOK) === tok; } catch (e) { return false; }
+    }
+    function pronto() {
+      try {
+        return typeof indexedDB !== 'undefined' && typeof Promise === 'function' &&
+               typeof crypto !== 'undefined' && !!crypto.subtle &&
+               typeof TextEncoder === 'function';
+      } catch (e) { return false; }
+    }
+    /* `crea` = false: se il database non c'e', NON si crea (si annulla l'aggiornamento):
+       chi legge e basta non lascia un database vuoto sul dispositivo. */
+    function apriDb(crea) {
+      return new Promise(function (ok, ko) {
+        var finito = false, req = null;
+        var t = setTimeout(function () { fine(ko, new Error('attesa')); }, ATTESA_MS);
+        function fine(f, x) {
+          if (finito) return false;
+          finito = true; clearTimeout(t); f(x);
+          return true;
+        }
+        try { req = indexedDB.open(DB_CHIAVI, 1); } catch (e) { fine(ko, e); return; }
+        req.onupgradeneeded = function () {
+          if (!crea) { try { req.transaction.abort(); } catch (e) {} return; }
+          var db = req.result;
+          if (!db.objectStoreNames.contains(ARCHIVIO)) {
+            db.createObjectStore(ARCHIVIO, {keyPath: 'sale'});
+          }
+        };
+        req.onsuccess = function () {
+          var db = req.result;
+          db.onversionchange = function () { try { db.close(); } catch (e) {} };
+          if (!fine(ok, db)) { try { db.close(); } catch (e) {} }
+        };
+        req.onerror = function (ev) {
+          try { if (ev && ev.preventDefault) ev.preventDefault(); } catch (e) {}
+          fine(ko, req.error || new Error('db'));
+        };
+      });
+    }
+    function fai(crea, modo, lavoro) {
+      return apriDb(crea).then(function (db) {
+        return new Promise(function (ok, ko) {
+          var esito = {valore: null}, tx = null;
+          function chiudi() { try { db.close(); } catch (e) {} }
+          try { tx = db.transaction(ARCHIVIO, modo); } catch (e) { chiudi(); ko(e); return; }
+          tx.oncomplete = function () { chiudi(); ok(esito.valore); };
+          tx.onerror = function () { chiudi(); ko(tx.error || new Error('tx')); };
+          tx.onabort = function () { chiudi(); ko(tx.error || new Error('tx')); };
+          try { lavoro(tx.objectStore(ARCHIVIO), esito); }
+          catch (e) { try { tx.abort(); } catch (x) {} }
+        });
+      });
+    }
+    function tutte() {
+      return fai(false, 'readonly', function (st, esito) {
+        esito.valore = [];
+        var c = st.openCursor();
+        c.onsuccess = function () {
+          var cur = c.result;
+          if (cur) { esito.valore.push(cur.value); cur['continue'](); }
+        };
+      }).then(function (v) { return v || []; }, function () { return []; });
+    }
+    function metti(voce) {
+      return fai(true, 'readwrite', function (st) { st.put(voce); });
+    }
+    function togli(sali) {
+      if (!sali || !sali.length) return Promise.resolve();
+      return fai(false, 'readwrite', function (st) {
+        for (var i = 0; i < sali.length; i++) st['delete'](sali[i]);
+      }).then(function () {}, function () {});
+    }
+    /* TUTTO il database: l'uscita dall'account, il diritto tolto, «Cancella le copie». */
+    function dimentica() {
+      return new Promise(function (ok) {
+        var req = null;
+        try {
+          if (typeof indexedDB !== 'undefined') req = indexedDB.deleteDatabase(DB_CHIAVI);
+        } catch (e) { req = null; }
+        if (!req) { ok(); return; }
+        var t = setTimeout(ok, ATTESA_MS);
+        req.onsuccess = req.onerror = req.onblocked = function () { clearTimeout(t); ok(); };
+      });
+    }
+    /* l'impronta della SESSIONE: il token resta dov'e', qui se ne tiene solo l'impronta */
+    function impronta(tok) {
+      return crypto.subtle.digest('SHA-256',
+                                  new TextEncoder().encode('portale-studio-sessione:' + tok))
+        .then(function (b) {
+          var a = new Uint8Array(b), s = '';
+          for (var i = 0; i < a.length; i++) s += (a[i] < 16 ? '0' : '') + a[i].toString(16);
+          return s;
+        });
+    }
+    /* le pubblicazioni salvate (una cache per sale): {sale: true}, null = non si sa */
+    function copie() {
+      try {
+        if (typeof caches === 'undefined' || !caches || !caches.keys) return Promise.resolve(null);
+        return caches.keys().then(function (nomi) {
+          var s = {};
+          for (var i = 0; i < nomi.length; i++) {
+            var n = String(nomi[i]);
+            if (n.indexOf(COPIA) === 0) s[n.slice(COPIA.length)] = true;
+          }
+          return s;
+        }, function () { return null; });
+      } catch (e) { return Promise.resolve(null); }
+    }
+    function vuoto(o) {
+      for (var k in o) { if (Object.prototype.hasOwnProperty.call(o, k)) return false; }
+      return true;
+    }
+    /* LA CHIAVE di `sale` per chi e' entrato con `tok`: {chiave, scade} oppure {motivo}:
+       nessuno (nessun account entrato), niente (nessuna copia salvata), assente, scaduta,
+       orologio, altra (c'e' solo la chiave di un'altra pubblicazione), guasto. Ogni voce che
+       non vale piu' si cancella qui. `usa`: si sta aprendo una pagina (si segna l'uso). */
+    function leggi(sale, tok, usa) {
+      if (!tok) return dimentica().then(function () { return {motivo: 'nessuno'}; });
+      if (!pronto()) return Promise.resolve({motivo: 'guasto'});
+      return copie().then(function (cs) {
+        if (cs && vuoto(cs)) return dimentica().then(function () { return {motivo: 'niente'}; });
+        return Promise.all([impronta(tok), tutte()]).then(function (r) {
+          var s = r[0], ora = Date.now(), via = [], mia = null, motivo = 'assente', altre = 0;
+          for (var i = 0; i < r[1].length; i++) {
+            var x = r[1][i], perche = '';
+            if (cs && !cs[x.sale]) perche = 'copia';
+            else if (x.sessione !== s) perche = 'sessione';
+            else if (!(ora < x.scade)) perche = 'scaduta';
+            else if (ora + TOLLERANZA_MS < (x.visto || x.rinnovata || 0)) perche = 'orologio';
+            if (perche) {
+              via.push(x.sale);
+              if (x.sale === sale && (perche === 'scaduta' || perche === 'orologio')) motivo = perche;
+            } else if (x.sale === sale) {
+              mia = x;
+            } else {
+              altre++;
+            }
+          }
+          return togli(via).then(function () {
+            if (!mia) return {motivo: motivo === 'assente' && altre ? 'altra' : motivo};
+            if (!usa || !ancora(tok)) return {chiave: mia.chiave, scade: mia.scade};
+            mia.visto = Math.max(ora, mia.visto || 0);
+            return metti(mia).then(null, function () {}).then(function () {
+              return {chiave: mia.chiave, scade: mia.scade};
+            });
+          });
+        });
+      }).then(null, function () { return {motivo: 'guasto'}; });
+    }
+    /* DOPO IL SI' DEL WORKER per `sale`, con la chiave `grezza` (i suoi byte, in memoria) che
+       ha appena aperto quella pubblicazione. La voce di `sale` si scrive o si rinnova SOLO se
+       la sua copia e' salvata; se ne vanno le voci che il si' smentisce: senza copia, di
+       un'altra sessione (la stessa regola di `leggi`), di un altro account, o di una madre che
+       il Worker non riconosce piu'. `info` = {uid, madre: l'impronta della madre di QUESTA
+       chiave, madri: le impronte che il Worker riconosce}. -> true se la voce c'e'. Non
+       rifiuta mai. */
+    function dopoSi(sale, grezza, tok, info) {
+      if (!tok || !pronto()) return Promise.resolve(false);
+      info = info || {};
+      return copie().then(function (cs) {
+        if (!cs) return false;
+        if (vuoto(cs)) return dimentica().then(function () { return false; });
+        return Promise.all([impronta(tok), tutte()]).then(function (r) {
+          var s = r[0], via = [], madri = info.madri || [];
+          for (var i = 0; i < r[1].length; i++) {
+            var x = r[1][i];
+            if (x.sale === sale) continue;
+            if (!cs[x.sale] || x.sessione !== s ||
+                (info.uid && x.uid && String(x.uid) !== String(info.uid)) ||
+                (madri.length && madri.indexOf(x.madre || '') < 0)) via.push(x.sale);
+          }
+          return togli(via).then(function () {
+            if (!cs[sale]) return togli([sale]).then(function () { return false; });
+            return crypto.subtle.importKey('raw', grezza, 'AES-GCM', false, ['decrypt'])
+              .then(function (k) {
+                var ora = Date.now();
+                if (!ancora(tok)) return Promise.reject(new Error('uscito'));
+                return metti({sale: sale, chiave: k, sessione: s, uid: info.uid || null,
+                              madre: info.madre || '', rinnovata: ora,
+                              scade: ora + GIORNI * GIORNO_MS, visto: ora});
+              }).then(function () { return true; });
+          });
+        });
+      }).then(null, function () { return false; });
+    }
+    /* le voci delle copie che non ci sono piu' (un «Aggiorna» completo toglie la vecchia) */
+    function pota() {
+      if (!pronto()) return Promise.resolve();
+      return copie().then(function (cs) {
+        if (!cs) return;
+        if (vuoto(cs)) return dimentica();
+        return tutte().then(function (t) {
+          var via = [];
+          for (var i = 0; i < t.length; i++) { if (!cs[t[i].sale]) via.push(t[i].sale); }
+          return togli(via);
+        });
+      }).then(null, function () {});
+    }
+    return {GIORNI: GIORNI, GLOBALE: GLOBALE, pronto: pronto, leggi: leggi, dopoSi: dopoSi,
+            togli: togli, dimentica: dimentica, pota: pota};
+  })();
+  /* `k` e' una CryptoKey: -> la pagina in chiaro (testo), oppure un rifiuto se la chiave non
+     la apre (AES-GCM: chiave sbagliata = decifratura RIFIUTATA). */
+  function decifraCon(k) {
+    return crypto.subtle.decrypt({name: 'AES-GCM', iv: b2a(IV)}, k, b2a(DATA))
+      .then(function (buf) { return new TextDecoder().decode(buf); });
+  }
+  function decifra(rawKey) {
+    return crypto.subtle.importKey('raw', rawKey, 'AES-GCM', false, ['decrypt'])
+      .then(decifraCon).then(apri);
+  }
+  function el(id) { return document.getElementById(id); }
+  function mostra(id) { el(id).classList.remove('nascosto'); }
+  function nascondi(id) { el(id).classList.add('nascosto'); }
+  function dici(t) { el('stato').textContent = t; }
+  function dimentica() { try { sessionStorage.removeItem(VOCE_CHIAVE); } catch (e) {} }
+  /* La chiave si registra PRIMA di aprire la pagina: gli script della pagina
+     decifrata la cercano in sessione appena partono (studio_fetch.js), e
+     «dopo» sarebbe una gara. Se poi non apre, la si toglie subito. */
+  function apriCon(k64) {
+    try { sessionStorage.setItem(VOCE_CHIAVE, JSON.stringify({salt: SALT, k: k64})); } catch (e) {}
+    return decifra(b2a(k64)).catch(function (e) { dimentica(); throw e; });
+  }
+  /* fuori: nessuna chiave. conEntra=false quando si e' gia' entrati;
+     conProfilo quando la strada e' il profilo (conferma dell'email), e allora
+     «abbonati» sparisce: a chi ha gia' pagato non si mostra un pagamento. */
+  function fuori(testo, conEntra, conProfilo) {
+    dici(testo);
+    if (conEntra === false) nascondi('entra'); else mostra('entra');
+    if (conProfilo) { mostra('profilo'); nascondi('abbonati'); }
+    mostra('acc');
+  }
+  function riprova(testo) { dici(testo); mostra('riprova'); }
+
+  /* «torna» porta anche il frammento (08/10): da un link profondo, come quelli della
+     raccolta delle mappe verso il blocco dentro la lezione, dopo l'accesso si torna al
+     blocco e non in cima. La pagina dell'account lo accetta gia' (stessa origine). */
+  var entra = el('entra');
+  entra.href = entra.href + (entra.href.indexOf('?') < 0 ? '?' : '&') +
+               'torna=' + encodeURIComponent(location.pathname + location.search +
+                                             (location.hash || ''));
+  el('riprova').addEventListener('click', function () { location.reload(); });
+
+  var tok = '';
+  try { tok = localStorage.getItem(VOCE_TOKEN) || ''; } catch (e) {}
+  /* il sistema sa gia' che la rete non c'e': inutile aspettare il Worker per 12 secondi */
+  function senzaRete() { return typeof navigator !== 'undefined' && navigator.onLine === false; }
+  var NON_SO = 'Non riesco a verificare il tuo accesso adesso. Riprova tra poco.';
+
+  /* LA CHIAVE SUL DISPOSITIVO (G2, 07/10). Senza rete, o quando il Worker non sa
+     rispondere, la copia salvata si apre con la chiave che sta su questo dispositivo, se
+     c'e' e vale (ChiaveDispositivo.leggi). `poi(esito)` = cosa dire se non si apre.
+     La chiave passa ai motori della pagina (studio_fetch.js la cerca dopo quella della
+     sessione) PRIMA che la pagina parta: si lascia nella finestra, che sopravvive alla
+     sostituzione del documento. Si toglie dal dispositivo solo se NON APRE la sua
+     pubblicazione: un guasto della pagina dopo non dice niente della chiave. */
+  function dalDispositivo(poi) {
+    ChiaveDispositivo.leggi(SALT, tok, true).then(function (es) {
+      if (!es.chiave) { poi(es); return; }
+      dici('Apro lo Studypack completo salvato su questo dispositivo…');
+      decifraCon(es.chiave).then(function (html) {
+        try { window[ChiaveDispositivo.GLOBALE] = {salt: SALT, chiave: es.chiave}; } catch (e) {}
+        apri(html);
+      }, function () {
+        ChiaveDispositivo.togli([SALT]).then(function () { poi({motivo: 'guasto'}); });
+      });
+    });
+  }
+  /* SENZA RETE (07/10, verifica OFF-2 e OFF-6; G2): la strada per uscire, visibile (gli
+     appunti gratuiti, la home), e la frase giusta per cio' che c'e' sul dispositivo. Una
+     chiave in sessione di un'altra pubblicazione, o solo chiavi di altre pubblicazioni sul
+     dispositivo, vogliono dire che questa copia salvata e' di una versione precedente: con la
+     rete l'hai gia' aperto, e consigliarglielo sarebbe falso. */
+  function senzaReteDi(es) {
+    var m = (es && es.motivo) || '';
+    var altra = m === 'altra' || !!(cache && cache.salt && cache.salt !== SALT);
+    mostra('fuori');
+    riprova(altra
+      ? 'Sei senza rete, e questa copia dello Studypack completo è di una versione ' +
+        'precedente: la chiave che hai adesso non la apre. Con la rete apri la pagina ' +
+        'dell’app e premi «Aggiorna».'
+      : m === 'scaduta'
+      ? 'Sei senza rete, e la chiave dello Studypack completo su questo dispositivo è ' +
+        'scaduta: vale ' + ChiaveDispositivo.GIORNI + ' giorni dall’ultima volta che l’hai ' +
+        'salvato o aperto con la rete. Aprilo una volta con la rete e torna a valere.'
+      : m === 'orologio'
+      ? 'Sei senza rete, e l’orologio del dispositivo è tornato indietro: per prudenza la ' +
+        'chiave dello Studypack completo si è cancellata. Aprilo una volta con la rete e ' +
+        'torna a valere.'
+      : 'Sei senza rete. Lo Studypack completo salvato si apre senza rete per 30 giorni dall’ultima volta che l’hai salvato o aperto con la rete: la chiave che lo apre resta su questo dispositivo, legata al tuo account, e si cancella quando esci dall’account. Riprova appena c’è campo.');
+  }
+
+  function chiediAllAccount() {
+    /* il nome deciso anche qui (revisione della fetta F4: restava il nome vecchio) */
+    if (!API) { riprova('Lo Studypack completo non si può aprire adesso: riprova fra poco.'); return; }
+    /* STATO 1, NON ENTRATO (fetta F4): «Entra» e la vetrina */
+    if (!tok) {
+      fuori('Questa pagina fa parte dello Studypack completo: entra col tuo account ' +
+            'e si apre da sola.');
+      return;
+    }
+    var ctrl = (typeof AbortController === 'function') ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 12000);
+    fetch(API + '/studio/chiave?sale=' + encodeURIComponent(SALT),
+          {headers: {'Authorization': 'Bearer ' + tok},
+           signal: ctrl ? ctrl.signal : undefined})
+      .then(function (r) {
+        clearTimeout(timer);
+        if (r.status === 401) return {sloggato: true};
+        return r.json().then(function (d) { d._stato = r.status; return d; });
+      })
+      .then(function (d) {
+        if (d.sloggato) {
+          /* il token e' MORTO: si toglie, o entra.html lo crederebbe vivo; e con lui la
+             chiave sul dispositivo, che e' legata a quella sessione (G2) */
+          try { localStorage.removeItem(VOCE_TOKEN); } catch (e) {}
+          ChiaveDispositivo.dimentica();
+          fuori('La sessione è scaduta: entra di nuovo e la pagina si apre da sola.');
+          return;
+        }
+        /* Un «si'» SENZA chiave e' un «non lo so», mai un «no»: e' cio' che
+           risponde un Worker di prima del 2026-09-19 (password al posto della
+           chiave), e mandare al pagamento proprio gli abbonati sarebbe il guasto
+           peggiore (finding X3/Z1 della review). La copia salvata, se c'e' la sua
+           chiave sul dispositivo, si apre lo stesso (G2). */
+        if (d._stato === 200 && d.consentito && !d.chiave) {
+          dalDispositivo(function () { riprova(NON_SO); });
+          return;
+        }
+        /* STATO 3, CON DIRITTO: si apre da sola */
+        if (d._stato === 200 && d.consentito && d.chiave) {
+          dici('Studypack completo attivo: apro la pagina…');
+          /* LA CHIAVE SUL DISPOSITIVO SI RINNOVA (G2): dopo il «si'», con la chiave che ha
+             APERTO la pagina, se la copia di questa pubblicazione e' salvata (dopoSi). Il
+             Worker dice anche l'account e l'impronta della madre: le voci che il «si'»
+             smentisce (un altro account, una madre ruotata) se ne vanno. */
+          var madri = [];
+          if (d.madre) madri.push(d.madre);
+          if (d.madre_precedente) madri.push(d.madre_precedente);
+          var info = {uid: d.uid || null, madre: d.madre || '', madri: madri};
+          /* chiave_precedente: c'e' solo nei minuti di una rotazione della
+             chiave madre, quando online puo' esserci ancora la build di prima */
+          return apriCon(d.chiave).then(function () {
+            ChiaveDispositivo.dopoSi(SALT, b2a(d.chiave), tok, info);
+          }, function (e) {
+            if (!d.chiave_precedente) throw e;
+            return apriCon(d.chiave_precedente).then(function () {
+              info.madre = d.madre_precedente || '';
+              ChiaveDispositivo.dopoSi(SALT, b2a(d.chiave_precedente), tok, info);
+            });
+          }).then(null, function () {
+            /* nessuna chiave del Worker apre questa pagina: e' di una pubblicazione
+               sostituita, o di una madre che non c'e' piu'. La chiave del dispositivo per
+               questa pubblicazione non ha piu' chi la garantisce. */
+            ChiaveDispositivo.togli([SALT]);
+            riprova('Questa pagina appartiene a una pubblicazione appena sostituita: ricaricala.');
+          });
+        }
+        /* Si decide SOLO davanti a un «no» ESPLICITO (200). Qualunque altra
+           risposta — un Worker vecchio che non conosce la rotta, un 503, un
+           500 — e' un «non lo so», e un «non lo so» non deve mai mandare a
+           pagare chi ha gia' pagato. Con la chiave sul dispositivo la copia salvata
+           si apre (G2): e' lo stesso caso di «senza rete». */
+        if (d._stato !== 200) {
+          dalDispositivo(function () { riprova(NON_SO); });
+          return;
+        }
+        /* STATO 2, ENTRATO SENZA DIRITTO, nei suoi casi: il pagamento che aspetta la
+           conferma dell'email, l'email da confermare, il diritto parziale, nessun
+           diritto. Mai un rinvio automatico, sempre la strada giusta (fetta F4). E in
+           tutti: il diritto non c'e', quindi la chiave sul dispositivo se ne va (G2). */
+        ChiaveDispositivo.dimentica();
+        if (d.in_attesa) {
+          fuori('Conferma l’email: il pagamento ti aspetta. Abbiamo ricevuto il tuo ' +
+                'pagamento e si attiva appena confermi il tuo indirizzo email: ' +
+                'controlla la posta, anche lo spam, o rimanda il link dal tuo profilo.',
+                false, true);
+          return;
+        }
+        /* email non confermata: se un accesso e' gia' legato a quell'indirizzo, e'
+           la conferma che manca — lo si dice e non lo si manda a pagare da solo.
+           La frase NON parla di «pagato o donato» ne' di un accesso che «si attiva
+           da solo» (audit 2026-09-24, finding PAG-4): oggi il webhook di Ko-fi e'
+           spento (i premi dei sostenitori li attiva lo staff) e Stripe non e'
+           acceso (`site_build.PAGAMENTI_PROVIDER` vuoto), quindi chi aveva appena
+           pagato o donato leggeva una promessa che nessuno manteneva. Detta cosi'
+           e' vera con qualunque provider acceso o spento. */
+        if (d.email_da_confermare) {
+          fuori('Il tuo account non ha ancora lo Studypack completo. Se ti abbiamo già dato ' +
+                "l’accesso con questa email, si attiva appena la confermi: dal " +
+                'tuo profilo rimandi il link.', false, true);
+          mostra('abbonati');
+          return;
+        }
+        /* «Scrivici» senza un posto dove scrivere e' una porta dipinta sul muro
+           (audit 2026-09-24, finding PAG-5): il ramo chiamava fuori(..., false)
+           e basta, e il bottone d'aiuto restava nascosto. Lo si mostra come nel
+           ramo senza diritti. */
+        if (d.parziale) {
+          fuori('Il tuo accesso non comprende tutto lo Studypack completo, e questa ' +
+                'pagina ne fa parte. Scrivici se pensi sia un errore.', false);
+          mostra('aiuto');
+          return;
+        }
+        /* nessun diritto: la vetrina, e per chi ha GIA' pagato il profilo (dice a che
+           punto e' il pagamento) e l'aiuto (fetta F4, «Hai già pagato?») */
+        fuori('Il tuo account non ha ancora lo Studypack completo. Se hai già pagato, ' +
+              'nel tuo profilo vedi a che punto è.', false);
+        mostra('profilo');
+        mostra('aiuto');
+      })
+      .catch(function (e) {
+        clearTimeout(timer);
+        /* SENZA RETE (07/10, l'app salva lo Studypack com'è online): la pagina salvata è
+           arrivata. Dal 07/10 (G2) la sua chiave puo' stare sul dispositivo: la si prova, e
+           solo se non c'e' (o non vale) si dice cosa manca, invece di un «riprova» che
+           senza campo non porta da nessuna parte. Un'attesa scaduta o un errore che non e'
+           di rete restano un «non lo so». */
+        var giu = senzaRete() || !!(e && e.name === 'TypeError');
+        dalDispositivo(function (es) {
+          if (giu) senzaReteDi(es); else riprova(NON_SO);
+        });
+      });
+  }
+
+  /* La chiave di QUESTA build gia' in sessione: si apre senza chiedere niente.
+     Se non apre (build sostituita, voce guasta) la si butta e si va avanti — mai
+     una pagina muta. */
+  var cache = null, entrato = !!tok;
+  try { cache = JSON.parse(sessionStorage.getItem(VOCE_CHIAVE) || 'null'); } catch (e) {}
+  /* la chiave in sessione vale solo finche' c'e' un account entrato: chi esce
+     da un'altra scheda non deve lasciare /studio aperta in questa (finding Z9).
+     Lo stesso per la chiave sul dispositivo (G2): senza nessuno entrato se ne va. */
+  if (cache && !entrato) dimentica();
+  if (!entrato) ChiaveDispositivo.dimentica();
+  /* Senza la chiave in sessione: se il sistema sa gia' che la rete non c'e', la chiave
+     del dispositivo subito (G2); altrimenti si chiede all'account. */
+  function avanti() {
+    if (entrato && senzaRete()) { dalDispositivo(senzaReteDi); return; }
+    chiediAllAccount();
+  }
+  if (cache && entrato && cache.salt === SALT && cache.k) {
+    var k = null;
+    try { k = b2a(cache.k); } catch (e) {}
+    if (k) {
+      decifra(k).catch(function () { dimentica(); avanti(); });
+    } else {
+      dimentica(); avanti();
+    }
+  } else {
+    avanti();
+  }
+})();
+</script>
+</body>
+</html>
